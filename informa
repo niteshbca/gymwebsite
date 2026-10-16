@@ -1,0 +1,127 @@
+PROJECT NAME: FitPro — Advanced Gym Management Software and Public Website
+
+ROLE: Act as a senior full-stack MERN architect, UI/UX designer, security engineer and QA engineer. Build a complete, functional, professional gym management platform. Do not build only a UI demo. All forms, buttons, tables, filters, dashboards, workflows, database operations, authentication, emails and reports must work.
+
+1. REQUIRED TECHNOLOGY
+Frontend: React, Vite, TypeScript, React Router, Tailwind CSS, shadcn/ui, React Hook Form, Zod, TanStack Query, Recharts, Lucide icons. Backend: Node.js, Express.js, TypeScript, MongoDB, Mongoose. Authentication: secure JWT access/refresh strategy using HttpOnly cookies, secure session handling and role-based permissions. Validation: Zod on frontend and backend. Email: Nodemailer with configurable SMTP. File uploads: Cloudinary or configurable local development storage. Testing: Vitest/React Testing Library and Supertest. Use ESLint and Prettier. Use npm workspaces or separate client and server directories. Do NOT use Next.js, PHP, Laravel, MySQL or Firebase.
+
+2. PROJECT ARCHITECTURE
+Create /client and /server with modular feature-based architecture. Add reusable components, layout shells, loading and error states, API service layer, typed interfaces, centralized error handling, environment configuration, migrations/seed scripts where appropriate, tests, README and .env.example. Never hardcode secrets. Provide a demo seed command and documented demo accounts for each role.
+
+3. PUBLIC WEBSITE
+Build a premium responsive gym website with Home, About, Facilities, Trainers, Membership Plans, Classes, Gallery, Testimonials, FAQs, Contact, enquiry form, location/map link, business hours, social links, terms, privacy policy and cancellation/refund policy. Include SEO metadata, sitemap, accessible forms, mobile navigation, optimized images and clear calls to action. Visitors can compare plans, enquire, register, book eligible classes and start membership purchase. Website content, pricing, facilities, trainers, FAQs, opening hours and contact information must be editable from admin settings.
+
+4. AUTHENTICATION AND ROLES
+Implement login, logout, registration where permitted, email verification, forgot/reset password, session expiration and account status management. Roles: Super Admin, Gym Owner/Admin, Branch Manager, Receptionist, Trainer, Accountant and Member. Enforce permissions on every protected backend endpoint, not only in the UI. Support granular permissions for viewing, creating, editing, deleting, exporting, approving payments, discounts, refunds and reports. Add audit logs for important actions. Prevent unauthorized branch access and cross-member data access.
+
+5. ADMIN DASHBOARD
+Create dashboard cards and charts for total members, active members, expired memberships, memberships expiring soon, today's check-ins, new registrations, monthly revenue, outstanding dues, renewals, enquiries, class occupancy, trainer workload and expenses. Add date filters, branch filters, comparison periods and drill-down links. All figures must come from real database queries; do not use hardcoded chart data in production.
+
+6. MEMBER CRM
+Manage member profiles with unique member number, photo, name, phone, email, address, date of birth where needed, emergency contact, joining date, source, notes, health/fitness information only when necessary and consented, assigned trainer, membership history, payment history, attendance, measurements, workout plans and uploaded documents. Add search, filters, pagination, sorting, member status, duplicate detection, profile history, bulk import with validation, export with permission checks, and configurable custom fields. Avoid exposing sensitive information to unauthorized roles.
+
+7. MEMBERSHIP PLAN MANAGEMENT
+Create, edit, activate/deactivate and archive membership plans. Support monthly, quarterly, half-yearly, yearly, weekly and custom-duration plans. Configure name, description, price, duration, tax, discount eligibility, joining fee, included sessions, access hours, branch access, class access, freeze rules, renewal rules, cancellation rules, guest passes and trainer benefits. Support one-time packages, personal training packages and class packages. Keep historical prices and plan snapshots on existing subscriptions when plans change. Do not silently change already-purchased memberships.
+
+8. MEMBER SUBSCRIPTIONS AND LIFECYCLE
+Create a subscription workflow with member, selected plan, start date, end/expiry date, activation date, assigned branch, optional trainer, discount, tax, total payable, amount paid, balance due, payment status and subscription status. Support pending, active, frozen, expired, cancelled and pending-renewal states with explicit transition rules. Handle manual activation, scheduled activation, renewals, upgrades, downgrades, plan changes, membership extension, pauses/freezes, cancellation, refunds and reactivation. Preserve complete subscription history. Validate date overlaps and renewal dates. Store dates consistently and display them in the gym's configured timezone. Expiry should be calculated reliably from the plan duration and configured policy.
+
+9. AUTOMATIC RENEWAL AND EXPIRY MANAGEMENT
+Create an expiry dashboard with configurable upcoming-expiry windows, such as 7 days, 3 days and 1 day before expiry, plus expired memberships and unpaid renewals. Implement scheduled background jobs with idempotency so reminders are not duplicated. Send email reminders to members and configurable notifications to authorized staff. Support reminder logs, delivery status, retry policy, renewal links and opt-out/notification preferences. Do not claim an email was delivered if SMTP fails. Show expired memberships clearly and enforce configured access rules. Automatically transition eligible subscriptions to expired using a reliable scheduled job and also calculate effective expiry during access checks so a missed job cannot grant access incorrectly. Renewal should create a new auditable subscription/payment record rather than overwriting old history.
+
+10. FEES, PAYMENTS AND RECEIPTS
+Support cash, UPI, card, bank transfer and online gateway payment methods, configurable payment gateways, partial payments if enabled, advance payments, dues, refunds, payment failures and payment reconciliation. Create unique invoice/receipt numbers, downloadable/printable receipts, payment history, tax/discount breakdown, outstanding balance reports and collection summaries. Never store raw card details. Verify gateway webhooks server-side, validate signatures, enforce idempotency and prevent duplicate payment processing. Mark online payments successful only after verified gateway confirmation. Keep refunds and adjustments auditable. Do not expose secret payment keys to the frontend.
+
+11. ATTENDANCE AND ACCESS CONTROL
+Record member check-in/check-out using member ID, QR code and receptionist-assisted lookup. Validate membership status, expiry, branch permissions, allowed access hours and relevant restrictions. Prevent duplicate accidental check-ins and define re-entry rules. Build today's attendance, peak hours, absent members and attendance history reports. Include trainer attendance separately. QR codes must contain a secure, non-sensitive identifier or signed token, not personal data. For physical turnstiles, biometric readers or hardware scanners, provide a documented integration adapter and simulator; do not claim hardware support without a configured device integration.
+
+12. TRAINER MANAGEMENT
+Manage trainer profiles, specialties, qualifications, schedules, assigned members, availability, compensation, session rates and active status. Trainers get a dedicated portal to see only authorized members, assigned workouts, class schedules, progress and session history. Include trainer attendance, session booking, session completion, cancellation and workload reports. Restrict compensation and financial information to authorized roles.
+
+13. WORKOUT AND FITNESS PROGRESS
+Create exercise library with name, muscle group, instructions, sets, repetitions, duration, rest period, difficulty, equipment and optional media. Build reusable workout templates and personalized plans with weekly schedules, start/end dates and trainer assignment. Members can view their plans and record permitted progress. Track measurements, weight, progress history, goals and progress charts with member consent. Include optional diet/nutrition notes with clear professional boundaries; do not present medical diagnoses. Maintain history and role-based access to private fitness information.
+
+14. GROUP CLASSES AND APPOINTMENTS
+Manage yoga, Zumba, cardio, strength classes and other configurable activities. Include class capacity, schedule, room, trainer, booking window, waitlist, booking cancellation rules, attendance, recurring schedules and member eligibility. Prevent overbooking and conflicting bookings. Support personal training sessions, availability, booking, rescheduling, cancellation and session-package deduction where configured. Notify members and trainers of confirmed bookings, changes and cancellations. Make class capacity and booking policies configurable.
+
+15. MEMBER PORTAL
+Create a separate secure member dashboard showing membership plan, start/expiry dates, status, renewal options, fee balance, receipts, payment history, attendance, QR/member ID, upcoming classes, workout plan, progress charts, trainer details, notifications, profile settings and support/enquiry form. Members must only see their own data. Allow online renewal and payments only when the gateway is configured; otherwise provide a clearly labelled manual payment workflow.
+
+16. LEADS AND ENQUIRY CRM
+Capture website enquiries, calls and walk-ins. Store contact details, interested plan, lead source, assigned employee, follow-up date, notes, status, conversion and lost reason. Provide lead pipeline, reminders, follow-up history, trial-class bookings and conversion reports. Add configurable email templates and optional integrations for WhatsApp/SMS through authorized providers. If credentials are missing, display setup instructions rather than simulating successful delivery.
+
+17. EXPENSES, INVENTORY AND EQUIPMENT
+Manage expense categories, vendors, bills, payment method, date, notes, attachments and approval permissions. Reports must distinguish income, expenses, refunds and outstanding receivables. Provide configurable revenue/expense summaries; do not label a simple cash-flow total as audited accounting profit. Inventory should include supplements, merchandise and consumables, SKU/barcode, stock movements, purchase records, suppliers, reorder threshold and stock adjustment audit. Equipment management should include asset records, purchase date, warranty, maintenance schedules, service logs, downtime and reminders.
+
+18. MULTI-BRANCH SUPPORT
+Support one gym or multiple branches. Store branch settings, address, timezone, opening hours, available plans, staff assignments and branch-specific access rules. Enforce branch-scoped authorization in all queries. Support branch transfers, cross-branch memberships if allowed, branch reports and consolidated owner reports. The application must also work correctly with a single branch.
+
+19. NOTIFICATIONS AND EMAIL
+Create configurable email templates and an in-app notification centre. Send relevant notifications for registration, email verification, membership activation, renewal, expiry reminders, payment receipts, payment failures, class booking, schedule changes, cancellation and password reset. Configure recipients for member, owner/admin, assigned trainer and responsible staff according to the event. Queue/retry asynchronous notifications when appropriate and maintain notification logs. Use SMTP environment variables and provide a test-email feature for authorized admins. Never log passwords, tokens, payment secrets or other sensitive data. Optional SMS/WhatsApp integrations must be behind provider adapters and environment configuration.
+
+20. REPORTS AND EXPORTS
+Provide filters by date, branch, plan, subscription status, trainer and payment method. Include member growth, active/expired memberships, renewal rate, upcoming expiry, revenue collections, pending dues, refunds, attendance, class occupancy, trainer sessions, lead conversion, expenses, stock and equipment maintenance reports. Add pagination, CSV exports and print-friendly views. PDF reports/receipts may be generated on the backend. Enforce report and export permissions and prevent spreadsheet formula injection in CSV exports.
+
+21. ADMIN SETTINGS
+Add gym name, logo, address, contact details, tax settings, currency (default INR), timezone, invoice numbering, receipt format, working hours, membership policies, freeze/cancellation rules, payment settings, email SMTP settings, notification templates, roles/permissions, branches, custom fields, backup/export guidance and branding/theme settings. Secrets must be entered and stored securely on the server; never return secrets in API responses. Include a safe configuration test flow.
+
+22. DATABASE MODELS
+Design normalized, indexed Mongoose schemas for User, Role, Permission, Branch, MemberProfile, TrainerProfile, MembershipPlan, Subscription, Payment, Invoice, Refund, Attendance, Exercise, WorkoutTemplate, WorkoutPlan, FitnessProgress, Class, ClassBooking, TrainingSession, Lead, FollowUp, Expense, ExpenseCategory, Vendor, InventoryItem, StockMovement, EquipmentAsset, MaintenanceRecord, Notification, EmailLog, AuditLog, GymSettings and optional Document/Consent. Add timestamps, schema validation, safe indexes and appropriate references. Use transactions where supported and necessary for multi-document financial workflows; document replica-set requirements or implement a safe alternative. Use integer minor units for money where appropriate, define currency consistently and avoid floating-point financial calculations. Add idempotency keys to payment/webhook operations. Do not delete financial history through ordinary member deletion.
+
+23. API DESIGN
+Use versioned REST endpoints under /api/v1. Organize routes/controllers/services/validators/repositories as appropriate. Include auth, users, roles, branches, members, plans, subscriptions, renewals, payments, invoices, refunds, attendance, trainers, workouts, exercises, fitness progress, classes, bookings, sessions, leads, follow-ups, expenses, vendors, inventory, equipment, notifications, reports, settings and audit logs. Apply authentication, authorization, input validation, pagination, rate limits, safe query filtering, consistent JSON responses and centralized error handling. Document endpoints with OpenAPI/Swagger. Use correct HTTP status codes and never expose stack traces in production.
+
+24. SECURITY AND PRIVACY
+Use Helmet, CORS allowlists, rate limiting, request size limits, input validation, output sanitization, secure cookie settings, CSRF protection appropriate to the cookie-auth design, password hashing with Argon2id or bcrypt, refresh-session rotation/revocation, brute-force protection and safe file upload validation. Protect against NoSQL injection, broken access control, IDOR, XSS, CSRF, insecure direct object references, mass assignment and privilege escalation. Use least-privilege database credentials. Avoid logging sensitive data. Provide privacy, consent, retention and account deactivation workflows appropriate to applicable law. Never hardcode demo credentials in production.
+
+25. PROFESSIONAL UI/UX
+Build a modern premium fitness brand aesthetic with a strong public landing page and a separate application dashboard. Use a consistent design system, responsive sidebar, top navigation, breadcrumbs, profile menu, global search where appropriate, notification centre, filters, data tables, pagination, drawers/modals, charts, status badges, confirmation dialogs, toast messages, skeleton loaders, empty states, error states and accessible form validation. Support desktop, tablet and mobile. Provide light/dark mode if practical. Avoid clutter, excessive animation, fake statistics, dead buttons and placeholder-only screens. Use reusable components and consistent typography, spacing, contrast and keyboard accessibility.
+
+26. RELIABILITY AND PERFORMANCE
+Use database indexes, efficient queries, server-side pagination, controlled population, caching only where safe, optimized images, lazy-loaded routes and reusable API clients. Add health-check endpoints, structured logs, graceful shutdown and request correlation IDs. Add backups and restore documentation; never promise a backup exists unless configured and verified. Ensure background jobs are safe across restarts and multiple workers, with locking/idempotency where needed.
+
+27. TESTING AND ACCEPTANCE CRITERIA
+Write tests for login/permissions, membership creation, plan changes, expiry calculations, freeze/extension, renewal history, duplicate reminders, payment success/failure/webhook replay, refunds, dues, QR attendance validation, branch isolation, class capacity, member data isolation, exports and validation errors. Verify critical workflows end-to-end: create plan → register member → activate subscription → record payment → generate receipt → check in → send expiry reminder → renew → retain complete history. Verify that an expired membership cannot bypass access rules, failed payments do not create successful receipts, unauthorized roles cannot access restricted routes and repeated webhooks do not double-charge or duplicate payments.
+
+28. DELIVERABLES
+Produce the complete working source code, clean folder structure, database schemas, API routes, frontend pages, reusable components, validation, authentication, role-based authorization, tests, seed scripts, .env.example files, README, installation instructions, local development commands, demo login instructions, SMTP setup, payment gateway setup, MongoDB setup, background worker/scheduler setup, deployment guide and troubleshooting guide. Clearly identify which integrations require external credentials. Never claim an external email, payment, SMS, WhatsApp or hardware integration works until it has been configured and tested.
+
+29. IMPLEMENTATION STRATEGY
+First inspect the existing repository and preserve useful existing code. If starting fresh, scaffold the project and confirm both client and server run. Build in phases: (1) architecture, UI system and auth; (2) branches, roles, members and plans; (3) subscriptions, renewals, payments and receipts; (4) attendance and expiry scheduler; (5) trainers, workouts, classes and member portal; (6) leads, expenses, inventory and equipment; (7) notifications, reports and settings; (8) tests, security review and deployment. After each phase run the application, tests, type checks and linting; fix errors before moving forward. Do not generate the entire app as disconnected placeholder pages. Prioritize a fully working end-to-end membership and payment lifecycle before expanding secondary modules.
+
+FINAL INSTRUCTION: Begin by inspecting the repository and explaining the short implementation plan. Then implement the project in the available files, run it, test the critical flows and report exactly what is working, what needs credentials and what remains incomplete. Ask only for essential missing configuration; use safe development defaults for nonessential choices. ye flow rhega 1. Owner gym setup karega
+Gym details, staff accounts, membership plans, fees aur branch settings set karega.
+
+
+
+2. Member register hoga
+Customer website se enquiry/registration karega ya reception par uska profile banega.
+
+
+
+3. Membership aur payment
+Plan select hoga, subscription create hogi, payment record aur receipt generate hogi.
+
+
+
+4. Daily attendance
+Member ID ya QR se check-in hoga; system membership validity verify karega.
+
+
+
+5. Expiry aur renewal
+Expiry se pehle reminders jayenge; renewal hone par purani aur nayi membership history save rahegi.
+
+
+
+6. Owner reports dekhega
+Revenue, pending fees, active members, expired memberships, attendance aur expenses ki reports milengi.
+
+
+
+Project run karne ke liye kya chahiye?
+- MongoDB: member, membership, payment aur attendance data ke liye.
+- SMTP email account: booking, receipt aur expiry emails bhejne ke liye.
+- Payment gateway: online membership fees ke liye; manual cash/UPI entry alag se bhi ho sakti hai.
+- Deployment: frontend aur backend hosting, environment variables aur scheduled background worker.
+- Optional integrations: WhatsApp/SMS provider aur physical gym access hardware. next js me bnao 
