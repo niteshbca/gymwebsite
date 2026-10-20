@@ -7,6 +7,7 @@ import { withAuth, ok, okPage, notFound, badRequest, audit } from "@/lib/api";
 import { getActiveMembership } from "@/server/services/subscription";
 import { startOfDay } from "date-fns";
 import { sendMail, emailTemplates } from "@/lib/mailer";
+import { getSettings } from "@/models/GymSettings";
 import { MemberProfile } from "@/models/MemberProfile";
 import { fmtDateTime } from "@/lib/time";
 
@@ -67,14 +68,30 @@ export const POST = withAuth("classes:book", async (req: NextRequest, ctx: Ctx, 
     occurrenceDate: occurrence,
     member: memberId,
     status,
+    source: user.role === "member" ? "member" : "reception",
+    passCode: `FP-${Math.random().toString(36).slice(2, 6).toUpperCase()}-${Math.random().toString(36).slice(2, 6).toUpperCase()}`,
     bookedAt: new Date(),
   });
 
   const member = await MemberProfile.findById(memberId).lean();
   if (member?.email) {
     const when = fmtDateTime(new Date(body.occurrenceDate + "T" + cls.startTime + ":00"));
-    const tpl = emailTemplates.classBooked(`${member.firstName} ${member.lastName}`.trim(), cls.name, when);
-    await sendMail({ to: member.email, subject: tpl.subject, html: tpl.html, template: "class_booking", entityId: String(booking._id) });
+    const settings = await getSettings();
+    const tpl =
+      status === "waitlisted"
+        ? emailTemplates.classBookingRejected(`${member.firstName} ${member.lastName}`.trim(), cls.name, when, "The class is full — you are on the waitlist and our team will call you if a seat opens.")
+        : emailTemplates.classBookingApproved({
+            name: `${member.firstName} ${member.lastName}`.trim(),
+            className: cls.name,
+            when,
+            room: cls.room,
+            passCode: booking.passCode,
+            gymName: settings.gymName,
+            address: settings.address,
+            city: settings.city,
+            phone: settings.phone,
+          });
+    await sendMail({ to: member.email, subject: tpl.subject, html: tpl.html, template: status === "waitlisted" ? "class_booking_waitlist" : "class_booking_approved", entityId: String(booking._id) });
   }
 
   await audit(user, "class.book", "ClassBooking", String(booking._id), { classId: id, status });

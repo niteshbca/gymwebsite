@@ -126,6 +126,44 @@ export const emailTemplates = {
     subject: `Class booking confirmed: ${className}`,
     html: layout(`Hi ${escapeHtml(name)}`, `<p>You are booked for <strong>${escapeHtml(className)}</strong> on ${escapeHtml(when)}.</p>`),
   }),
+  classBookingPending: (name: string, className: string, when: string) => ({
+    subject: `Booking request received: ${className}`,
+    html: layout(
+      `Hi ${escapeHtml(name)}`,
+      `<p>We have received your booking request for <strong>${escapeHtml(className)}</strong> on <strong>${escapeHtml(when)}</strong>.</p>
+       <p>Our team will review it and you will get a confirmation email with your digital entry pass shortly.</p>`,
+    ),
+  }),
+  classBookingApproved: (opts: {
+    name: string;
+    className: string;
+    when: string;
+    room: string;
+    passCode: string;
+    gymName: string;
+    address: string;
+    city: string;
+    phone: string;
+  }) => ({
+    subject: `Booking confirmed: ${opts.className} — your pass inside`,
+    html: layout(
+      `Hi ${escapeHtml(opts.name)}`,
+      `<p>Your booking for <strong>${escapeHtml(opts.className)}</strong> is <strong style="color:#059669">CONFIRMED</strong>.</p>
+       <p><strong>When:</strong> ${escapeHtml(opts.when)}<br/><strong>Where:</strong> ${escapeHtml(opts.room)} · ${escapeHtml(opts.gymName)}, ${escapeHtml(opts.address)}, ${escapeHtml(opts.city)}</p>
+       ${passHtml(opts.passCode, opts.className, opts.when, opts.gymName)}
+       <p>-show this pass at reception along with a valid photo ID. Please arrive 10 minutes early.</p>
+       <p>Need help? Call ${escapeHtml(opts.phone)}.</p>`,
+    ),
+  }),
+  classBookingRejected: (name: string, className: string, when: string, reason: string) => ({
+    subject: `Booking update: ${className}`,
+    html: layout(
+      `Hi ${escapeHtml(name)}`,
+      `<p>Unfortunately we could not confirm your booking for <strong>${escapeHtml(className)}</strong> on ${escapeHtml(when)}.</p>
+       ${reason ? `<p><strong>Reason:</strong> ${escapeHtml(reason)}</p>` : ""}
+       <p>You can try another slot from our website or contact the front desk — we will be happy to help.</p>`,
+    ),
+  }),
   enquiryReceived: (name: string) => ({
     subject: "We received your enquiry",
     html: layout(`Hi ${escapeHtml(name)}`, `<p>Thanks for reaching out! Our team will contact you shortly.</p>`),
@@ -140,6 +178,24 @@ function layout(title: string, body: string) {
     <hr style="border:none;border-top:1px solid #e4e4e7;margin:20px 0"/>
     <p style="color:#71717a;font-size:12px">FitPro Gym Management · This is an automated message.</p>
   </div></body></html>`;
+}
+
+/** Digital entry pass block embedded in confirmation emails. */
+function passHtml(passCode: string, className: string, when: string, gymName: string) {
+  const qr = `https://api.qrserver.com/v1/create-qr-code/?size=140x140&margin=0&data=${encodeURIComponent(`FITPRO-PASS:${passCode}`)}`;
+  return `<div style="margin:20px 0;border:2px dashed #16a34a;border-radius:12px;overflow:hidden">
+    <div style="background:#16a34a;color:#fff;padding:12px 16px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;font-size:12px">
+      ${escapeHtml(gymName)} · Entry Pass
+    </div>
+    <div style="display:flex;gap:16px;padding:16px;align-items:center">
+      <img src="${qr}" alt="Pass QR code" width="140" height="140" style="border-radius:8px;border:1px solid #e4e4e7"/>
+      <div style="color:#3f3f46;font-size:14px;line-height:1.7">
+        <div style="font-size:18px;font-weight:800;color:#18181b">${escapeHtml(className)}</div>
+        <div>${escapeHtml(when)}</div>
+        <div style="margin-top:8px">Pass code: <strong style="font-family:ui-monospace,monospace;font-size:16px;color:#18181b">${escapeHtml(passCode)}</strong></div>
+      </div>
+    </div>
+  </div>`;
 }
 
 export function escapeHtml(s: string) {

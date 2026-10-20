@@ -78,9 +78,12 @@ export default function HomePage() {
           </div>
           <div className="mt-8 grid gap-5 md:grid-cols-3">
             {data?.plans.slice(0, 3).map((p) => (
-              <Card key={p.id} className="flex flex-col">
+              <Card key={p.id} className={`flex flex-col ${p.popular ? "border-primary shadow-md" : ""}`}>
                 <CardHeader>
-                  <CardTitle>{p.name}</CardTitle>
+                  <div className="flex items-center justify-between gap-2">
+                    <CardTitle>{p.name}</CardTitle>
+                    {p.popular && <span className="rounded-full bg-primary px-2 py-0.5 text-xs font-semibold text-primary-foreground">Popular</span>}
+                  </div>
                   <CardDescription>{p.description}</CardDescription>
                 </CardHeader>
                 <CardContent className="flex-1">
@@ -88,9 +91,13 @@ export default function HomePage() {
                     <span className="text-sm font-normal text-muted-foreground"> / {p.durationValue} {p.durationUnit}{p.durationValue > 1 ? "s" : ""}</span>
                   </p>
                   <ul className="mt-4 space-y-2 text-sm">
-                    <li className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-emerald-500" />{p.includedSessions > 0 ? `${p.includedSessions} trainer sessions included` : "Unlimited gym floor access"}</li>
-                    <li className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-emerald-500" />{p.classAccess === "none" ? "No group classes" : "Group classes included"}</li>
-                    <li className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-emerald-500" />{p.freezeAllowed ? "Freeze allowed" : "No freeze"}</li>
+                    {(p.features?.length ? p.features.slice(0, 4) : [
+                      p.includedSessions > 0 ? `${p.includedSessions} trainer sessions included` : "Unlimited gym floor access",
+                      p.classAccess === "none" ? "No group classes" : "Group classes included",
+                      p.freezeAllowed ? "Freeze allowed" : "No freeze",
+                    ]).map((f, fi) => (
+                      <li key={fi} className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 shrink-0 text-emerald-500" />{f}</li>
+                    ))}
                     {p.joiningFeeMinor > 0 && <li className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-emerald-500" />Joining fee {money(p.joiningFeeMinor)}</li>}
                   </ul>
                   <Link href={`/contact?plan=${p.id}`} className="mt-6 block"><Button className="w-full">Enquire about this plan</Button></Link>
@@ -108,7 +115,7 @@ export default function HomePage() {
         <div className="mt-8 overflow-hidden rounded-xl border">
           <table className="w-full text-sm">
             <thead className="bg-muted/60 text-left">
-              <tr><th className="p-3 font-medium">Class</th><th className="p-3 font-medium">Day</th><th className="p-3 font-medium">Time</th><th className="p-3 font-medium">Room</th><th className="p-3 font-medium">Capacity</th></tr>
+              <tr><th className="p-3 font-medium">Class</th><th className="p-3 font-medium">Day</th><th className="p-3 font-medium">Time</th><th className="p-3 font-medium">Room</th><th className="p-3 font-medium">Seats left</th><th className="p-3 font-medium"></th></tr>
             </thead>
             <tbody>
               {data?.classes.map((c) => (
@@ -117,10 +124,19 @@ export default function HomePage() {
                   <td className="p-3">{DAYS[c.dayOfWeek]}</td>
                   <td className="p-3">{c.startTime} – {c.endTime}</td>
                   <td className="p-3">{c.room}</td>
-                  <td className="p-3">{c.capacity}</td>
+                  <td className="p-3">
+                    {c.seatsLeft > 0 ? (
+                      <span className="inline-flex items-center rounded-full bg-emerald-100 px-2 py-0.5 text-xs font-semibold text-emerald-800">{c.seatsLeft} left</span>
+                    ) : (
+                      <span className="inline-flex items-center rounded-full bg-red-100 px-2 py-0.5 text-xs font-semibold text-red-800">Full</span>
+                    )}
+                  </td>
+                  <td className="p-3 text-right">
+                    <Link href={`/classes?book=${c.id}`} className="text-sm font-medium text-primary hover:underline">Book →</Link>
+                  </td>
                 </tr>
               ))}
-              {data && data.classes.length === 0 && <tr><td colSpan={5} className="p-6 text-center text-muted-foreground">Schedule published soon.</td></tr>}
+              {data && data.classes.length === 0 && <tr><td colSpan={6} className="p-6 text-center text-muted-foreground">Schedule published soon.</td></tr>}
             </tbody>
           </table>
         </div>

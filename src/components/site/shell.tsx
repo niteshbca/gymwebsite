@@ -19,8 +19,8 @@ export type PublicSite = {
     taxLabel: string; mapLink: string; membershipPolicy: string; cancellationPolicy: string; refundPolicy: string;
     privacyPolicy: string; terms: string; themePrimary: string; allowSelfRegistration: boolean;
   };
-  plans: { id: string; name: string; description: string; priceMinor: number; durationValue: number; durationUnit: string; joiningFeeMinor: number; classAccess: string; freezeAllowed: boolean; includedSessions: number; category: string }[];
-  classes: { id: string; name: string; description: string; dayOfWeek: number; startTime: string; endTime: string; room: string; capacity: number }[];
+  plans: { id: string; name: string; description: string; image: string; features: string[]; popular: boolean; priceMinor: number; durationValue: number; durationUnit: string; joiningFeeMinor: number; classAccess: string; freezeAllowed: boolean; includedSessions: number; category: string }[];
+  classes: { id: string; name: string; description: string; image: string; intensity: string; trainerName: string; dayOfWeek: number; startTime: string; endTime: string; room: string; capacity: number; seatsLeft: number; nextDate: string }[];
   branches: { id: string; name: string; city: string; address: string; phone: string }[];
 };
 

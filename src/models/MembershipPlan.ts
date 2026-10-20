@@ -7,6 +7,9 @@ export interface MembershipPlanDoc extends mongoose.Document {
   name: string;
   code: string;
   description: string;
+  image: string;
+  features: string[];
+  popular: boolean;
   category: PlanCategory;
   durationValue: number;
   durationUnit: PlanDurationUnit;
@@ -40,6 +43,9 @@ const MembershipPlanSchema = new Schema<MembershipPlanDoc>(
     name: { type: String, required: true, trim: true },
     code: { type: String, required: true, unique: true, uppercase: true, trim: true },
     description: { type: String, default: "" },
+    image: { type: String, default: "" },
+    features: { type: [String], default: [] },
+    popular: { type: Boolean, default: false },
     category: { type: String, enum: ["membership", "personal_training", "class_package", "one_time"], default: "membership" },
     durationValue: { type: Number, required: true, min: 1 },
     durationUnit: { type: String, enum: ["day", "week", "month", "year"], default: "month" },

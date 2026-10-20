@@ -24,7 +24,8 @@ export async function signAccessToken(payload: Omit<TokenPayload, "type">) {
   return new SignJWT({ ...payload, type: "access" })
     .setProtectedHeader({ alg: "HS256" })
     .setIssuedAt()
-    .setExpirationTime(ttlToSeconds(env.ACCESS_TOKEN_TTL, 900))
+    // jose treats a raw number as an absolute unix timestamp — pass a relative string instead
+    .setExpirationTime(`${ttlToSeconds(env.ACCESS_TOKEN_TTL, 900)}s`)
     .sign(enc.encode(env.JWT_ACCESS_SECRET));
 }
 
@@ -32,7 +33,7 @@ export async function signRefreshToken(payload: Omit<TokenPayload, "type"> & { j
   return new SignJWT({ ...payload, type: "refresh" })
     .setProtectedHeader({ alg: "HS256" })
     .setIssuedAt()
-    .setExpirationTime(ttlToSeconds(env.REFRESH_TOKEN_TTL, 7 * 86400))
+    .setExpirationTime(`${ttlToSeconds(env.REFRESH_TOKEN_TTL, 7 * 86400)}s`)
     .sign(enc.encode(env.JWT_REFRESH_SECRET));
 }
 
