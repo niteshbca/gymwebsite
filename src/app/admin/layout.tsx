@@ -5,48 +5,57 @@ import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 import {
   Dumbbell, LayoutDashboard, CalendarCheck2, Users, CreditCard, Settings,
-  ExternalLink, LogOut, Menu, X, Bell,
+  ExternalLink, LogOut, Menu, X, Bell, CalendarDays, ClipboardList, ClipboardCheck, Target,
 } from "lucide-react";
 import { cn } from "@/lib/cn";
-import { apiPost } from "@/lib/client";
+import { apiGet, apiPost } from "@/lib/client";
+import { useQuery } from "@tanstack/react-query";
 
 const NAV = [
   { href: "/admin", label: "Dashboard", icon: LayoutDashboard },
   { href: "/admin/bookings", label: "Bookings", icon: CalendarCheck2 },
+  { href: "/admin/members", label: "Members", icon: Users },
+  { href: "/admin/attendance", label: "Attendance", icon: ClipboardCheck },
 ];
 
 const NAV_GROUP2 = [
-  { href: "/admin/members", label: "Members", icon: Users, soon: true },
-  { href: "/admin/payments", label: "Payments", icon: CreditCard, soon: true },
-  { href: "/admin/settings", label: "Settings", icon: Settings, soon: true },
+  { href: "/admin/classes", label: "Classes", icon: CalendarDays },
+  { href: "/admin/plans", label: "Plans", icon: ClipboardList },
+  { href: "/admin/payments", label: "Payments", icon: CreditCard },
+  { href: "/admin/leads", label: "Leads", icon: Target },
+  { href: "/admin/settings", label: "Settings", icon: Settings },
 ];
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const router = useRouter();
   const [open, setOpen] = useState(false);
+  const { data: me } = useQuery({
+    queryKey: ["auth-me"],
+    queryFn: async () => (await apiGet<{ data: { name: string; role: string } }>("/api/v1/auth/me")).data,
+    retry: false,
+    staleTime: 60_000,
+  });
 
   async function logout() {
     try { await apiPost("/api/v1/auth/logout", {}); } catch {}
     router.push("/login");
   }
 
-  const link = (n: { href: string; label: string; icon: typeof LayoutDashboard; soon?: boolean }) => {
-    const active = pathname === n.href;
+  const link = (n: { href: string; label: string; icon: typeof LayoutDashboard }) => {
+    const active = pathname === n.href || pathname.startsWith(`${n.href}/`);
     return (
       <Link
         key={n.href}
-        href={n.soon ? "#" : n.href}
+        href={n.href}
         onClick={() => setOpen(false)}
         className={cn(
           "flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors",
           active ? "bg-primary text-primary-foreground" : "text-zinc-300 hover:bg-zinc-800 hover:text-white",
-          n.soon && "opacity-50",
         )}
       >
         <n.icon className="h-4 w-4" />
         {n.label}
-        {n.soon && <span className="ml-auto rounded bg-zinc-700 px-1.5 py-0.5 text-[10px] uppercase">soon</span>}
       </Link>
     );
   };
@@ -97,7 +106,9 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
               <span className="relative inline-flex">
                 <Bell className="h-5 w-5 text-zinc-400" />
               </span>
-              <span className="rounded-full bg-zinc-800 px-3 py-1 text-xs font-medium text-zinc-300">Staff</span>
+              <span className="rounded-full bg-zinc-800 px-3 py-1 text-xs font-medium capitalize text-zinc-300">
+                {me ? `${me.name} · ${me.role.replace("_", " ")}` : "Staff"}
+              </span>
             </div>
           </div>
           {children}

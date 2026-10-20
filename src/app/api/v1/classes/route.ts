@@ -17,7 +17,7 @@ export const GET = withAuth("classes:read", async (req: NextRequest, _ctx, user)
     ClassModel.countDocuments(filter),
   ]);
   return okPage(items.map((c) => ({ ...c, id: String(c._id) })), total, page, size);
-});
+}, { allowSelfMember: true });
 
 const schema = z.object({
   name: z.string().min(2).max(80),

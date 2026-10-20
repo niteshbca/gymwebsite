@@ -49,7 +49,7 @@ export const GET = withAuth("plans:read", async (req: NextRequest, _ctx, user) =
   ]);
   if (user.role === "member") return okPage(items, total, page, size);
   return okPage(items, total, page, size);
-});
+}, { allowSelfMember: true });
 
 export const POST = withAuth("plans:create", async (req: NextRequest, _ctx, user) => {
   await connectDB();

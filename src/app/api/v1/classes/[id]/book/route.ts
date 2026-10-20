@@ -96,7 +96,7 @@ export const POST = withAuth("classes:book", async (req: NextRequest, ctx: Ctx, 
 
   await audit(user, "class.book", "ClassBooking", String(booking._id), { classId: id, status });
   return new Response(JSON.stringify({ success: true, data: { id: String(booking._id), status } }), { status: 201 });
-});
+}, { allowSelfMember: true });
 
 export const GET = withAuth("classes:book", async (req: NextRequest, ctx: Ctx, user) => {
   await connectDB();
@@ -113,7 +113,7 @@ export const GET = withAuth("classes:book", async (req: NextRequest, ctx: Ctx, u
     .limit(200)
     .lean();
   return okPage(bookings.map((b) => ({ ...b, id: String(b._id) })), bookings.length, 1, 200);
-});
+}, { allowSelfMember: true });
 
 function overlaps(aStart: string, aEnd: string, bStart: string, bEnd: string) {
   return toMin(aStart) < toMin(bEnd) && toMin(bStart) < toMin(aEnd);

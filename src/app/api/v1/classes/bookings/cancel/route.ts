@@ -37,4 +37,4 @@ export const POST = withAuth("classes:book", async (req: NextRequest, _ctx, user
   await audit(user, "class.cancel_booking", "ClassBooking", String(booking._id));
   void getActiveMembership;
   return ok({ cancelled: true, id: String(booking._id) });
-});
+}, { allowSelfMember: true });

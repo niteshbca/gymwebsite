@@ -24,14 +24,16 @@ export const GET = withAuth("attendance:read", async (req: NextRequest, _ctx, us
     filter.checkInAt = { $gte: start };
   }
   const member = url.searchParams.get("member");
-  if (member) filter.member = member;
+  if (user.role === "member") {
+    if (user.memberProfile) filter.member = user.memberProfile;
+  } else if (member) filter.member = member;
   const [items, total] = await Promise.all([
     Attendance.find(filter).sort({ checkInAt: -1 }).skip(skip).limit(limit)
       .populate("member", "memberNumber firstName lastName").lean(),
     Attendance.countDocuments(filter),
   ]);
   return okPage(items.map((a) => ({ ...a, id: String(a._id) })), total, page, size);
-});
+}, { allowSelfMember: true });
 
 const checkinSchema = z
   .object({

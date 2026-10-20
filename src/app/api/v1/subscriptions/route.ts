@@ -17,7 +17,10 @@ export const GET = withAuth("subscriptions:read", async (req: NextRequest, _ctx,
   const status = url.searchParams.get("status");
   if (status) filter.status = status;
   const member = url.searchParams.get("member");
-  if (member) filter.member = member;
+  if (user.role === "member") {
+    if (!user.memberProfile) return okPage([], 0, page, size);
+    filter.member = user.memberProfile;
+  } else if (member) filter.member = member;
   const sort = parseSort(url, ["createdAt", "endDate", "startDate"], "-createdAt");
   const [items, total] = await Promise.all([
     Subscription.find(filter).sort(sort).skip(skip).limit(limit)
@@ -26,7 +29,7 @@ export const GET = withAuth("subscriptions:read", async (req: NextRequest, _ctx,
     Subscription.countDocuments(filter),
   ]);
   return okPage(items.map((s) => ({ ...toSubscriptionJSON(s as never), member: s.member, plan: s.plan })), total, page, size);
-});
+}, { allowSelfMember: true });
 
 const createSchema = z.object({
   member: z.string().min(1),

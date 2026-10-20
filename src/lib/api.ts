@@ -115,10 +115,8 @@ export function withAuth<Ctx extends { params: Promise<Record<string, string>> }
     try {
       const user = await getSessionUser();
       if (!user) throw unauthorized();
-      if (permission && !can(user.role, permission, user.permissions)) throw forbidden();
-      if (opts.allowSelfMember && user.role === "member") {
-        // member routes: permission may be staff-only; allow self access
-      }
+      const selfMember = opts.allowSelfMember === true && user.role === "member";
+      if (permission && !selfMember && !can(user.role, permission, user.permissions)) throw forbidden();
       return (await handler(req, ctx, user)) as NextResponse;
     } catch (e) {
       return fail(e);
