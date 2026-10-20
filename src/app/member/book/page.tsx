@@ -108,7 +108,7 @@ export default function MemberBookPage() {
       <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
         <div>
           <h1 className="text-2xl font-bold">Book a class</h1>
-          <p className="text-sm text-zinc-400">Pick a session and reserve your seat instantly.</p>
+          <p className="text-sm text-muted-foreground">Pick a session and reserve your seat instantly.</p>
         </div>
         <Link href="/member/bookings" className={buttonVariants({ size: "sm", variant: "outline" })}>My bookings</Link>
       </div>
@@ -119,7 +119,7 @@ export default function MemberBookPage() {
             key={c.key}
             onClick={() => setDay(c.key)}
             className={`rounded-full px-3 py-1 text-xs font-semibold transition-colors ${
-              day === c.key ? "bg-primary text-primary-foreground" : "bg-zinc-800 text-zinc-300 hover:bg-zinc-700"
+              day === c.key ? "bg-primary text-primary-foreground" : "bg-muted text-foreground/75 hover:bg-muted"
             }`}
           >
             {c.label}
@@ -130,9 +130,9 @@ export default function MemberBookPage() {
             value={q}
             onChange={(e) => setQ(e.target.value)}
             placeholder="Search class, room, trainer..."
-            className="border-zinc-700 bg-zinc-900 pl-8 text-zinc-100 placeholder:text-zinc-500"
+            className="border-input bg-card pl-8 text-foreground placeholder:text-muted-foreground/75"
           />
-          <span className="absolute left-2.5 top-2.5 text-zinc-500">
+          <span className="absolute left-2.5 top-2.5 text-muted-foreground/75">
             <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-4.35-4.35M17 11a6 6 0 11-12 0 6 6 0 0112 0z" /></svg>
           </span>
         </div>
@@ -150,12 +150,12 @@ export default function MemberBookPage() {
 
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {filtered.map((c) => (
-          <Card key={c.id} className="overflow-hidden border-zinc-800 bg-zinc-900">
-            <div className="relative h-32 bg-zinc-800">
+          <Card key={c.id} className="overflow-hidden border-border bg-card">
+            <div className="relative h-32 bg-muted">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src={c.image || "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=800&q=60"} alt={c.name} className="h-full w-full object-cover opacity-80" />
               <div className="absolute left-2 top-2 flex gap-1.5">
-                <Badge variant="secondary" className="bg-zinc-950/80 text-zinc-200">{DAYS[c.dayOfWeek].slice(0, 3)}</Badge>
+                <Badge variant="secondary" className="bg-background/90 text-foreground">{DAYS[c.dayOfWeek].slice(0, 3)}</Badge>
                 {c.requiresPlanAccess && <Badge variant="info">Members</Badge>}
               </div>
             </div>
@@ -164,12 +164,12 @@ export default function MemberBookPage() {
                 <p className="font-semibold leading-tight">{c.name}</p>
                 <Badge variant="success">Active</Badge>
               </div>
-              {c.description && <p className="line-clamp-2 text-xs text-zinc-400">{c.description}</p>}
-              <div className="grid gap-1 text-xs text-zinc-300">
-                <span className="inline-flex items-center gap-1.5"><Clock className="h-3.5 w-3.5 text-zinc-500" /> {c.startTime}–{c.endTime}</span>
-                <span className="inline-flex items-center gap-1.5"><MapPin className="h-3.5 w-3.5 text-zinc-500" /> {c.room}</span>
-                <span className="inline-flex items-center gap-1.5"><Users className="h-3.5 w-3.5 text-zinc-500" /> Up to {c.capacity} people</span>
-                {c.trainer && <span className="text-zinc-400">Coach: {c.trainer.name}</span>}
+              {c.description && <p className="line-clamp-2 text-xs text-muted-foreground">{c.description}</p>}
+              <div className="grid gap-1 text-xs text-foreground/75">
+                <span className="inline-flex items-center gap-1.5"><Clock className="h-3.5 w-3.5 text-muted-foreground/75" /> {c.startTime}–{c.endTime}</span>
+                <span className="inline-flex items-center gap-1.5"><MapPin className="h-3.5 w-3.5 text-muted-foreground/75" /> {c.room}</span>
+                <span className="inline-flex items-center gap-1.5"><Users className="h-3.5 w-3.5 text-muted-foreground/75" /> Up to {c.capacity} people</span>
+                {c.trainer && <span className="text-muted-foreground">Coach: {c.trainer.name}</span>}
               </div>
               <Button
                 size="sm"
@@ -195,15 +195,15 @@ export default function MemberBookPage() {
           </DialogHeader>
 
           {occs.length === 0 ? (
-            <p className="text-sm text-zinc-400">This class has no upcoming dates right now.</p>
+            <p className="text-sm text-muted-foreground">This class has no upcoming dates right now.</p>
           ) : (
             <div className="grid gap-2">
-              <p className="text-xs font-medium uppercase tracking-wide text-zinc-500">Choose a date</p>
+              <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground/75">Choose a date</p>
               {occs.map((o) => (
                 <label
                   key={o.value}
                   className={`flex cursor-pointer items-center justify-between rounded-lg border px-3 py-2.5 text-sm transition-colors ${
-                    occDate === o.value ? "border-primary bg-primary/10" : "border-zinc-700 hover:border-zinc-500"
+                    occDate === o.value ? "border-primary bg-primary/10" : "border-input hover:border-zinc-500"
                   }`}
                 >
                   <span>{o.label}</span>
@@ -220,7 +220,7 @@ export default function MemberBookPage() {
           )}
 
           <DialogFooter>
-            <Button variant="outline" className="border-zinc-700 bg-transparent" onClick={() => setTarget(null)}>Cancel</Button>
+            <Button variant="outline" className="border-input bg-transparent" onClick={() => setTarget(null)}>Cancel</Button>
             <Button disabled={busy || !occDate} onClick={book}>
               {busy ? "Booking..." : <><CheckCircle2 className="h-4 w-4" /> Confirm booking</>}
             </Button>

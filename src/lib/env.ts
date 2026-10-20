@@ -14,7 +14,7 @@ export const env = {
   SMTP_PORT: Number(req("SMTP_PORT", "587")),
   SMTP_USER: req("SMTP_USER"),
   SMTP_PASS: req("SMTP_PASS"),
-  SMTP_FROM: req("SMTP_FROM", "FitPro <no-reply@fitpro.local>"),
+  SMTP_FROM: req("SMTP_FROM", "NiteshPro <no-reply@niteshpro.in>"),
   UPLOAD_DRIVER: req("UPLOAD_DRIVER", "local"),
   PAYMENT_GATEWAY: req("PAYMENT_GATEWAY", "manual"),
   PAYMENT_WEBHOOK_SECRET: req("PAYMENT_WEBHOOK_SECRET"),

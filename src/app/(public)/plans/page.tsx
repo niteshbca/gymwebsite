@@ -15,7 +15,7 @@ export default function PlansPage() {
   const plans = [...(data?.plans ?? [])].sort((a, b) => a.priceMinor - b.priceMinor);
   return (
     <div className="mx-auto max-w-7xl px-4 py-16">
-      <h1 className="text-4xl font-extrabold tracking-tight">Membership plans</h1>
+      <h1 className="text-4xl font-semibold tracking-tight">Membership plans</h1>
       <p className="mt-3 max-w-2xl text-muted-foreground">Compare plans side by side. All prices include taxes as configured by the gym. Enquire to start your membership — activation happens after payment confirmation at the front desk or online.</p>
       <div className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         {plans.map((p) => (

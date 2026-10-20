@@ -81,15 +81,15 @@ export default function AdminAttendancePage() {
       <div className="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h1 className="text-2xl font-bold">Attendance</h1>
-          <p className="text-sm text-zinc-400">Front-desk check-ins and today’s visit log.</p>
+          <p className="text-sm text-muted-foreground">Front-desk check-ins and today’s visit log.</p>
         </div>
-        <Button size="sm" variant="outline" className="border-zinc-700 bg-transparent" onClick={() => refetch()}>
+        <Button size="sm" variant="outline" className="border-input bg-transparent" onClick={() => refetch()}>
           <RefreshCw className="h-3.5 w-3.5" /> Refresh
         </Button>
       </div>
 
       <div className="grid gap-4 lg:grid-cols-3">
-        <Card className="border-zinc-800 bg-zinc-900">
+        <Card className="border-border bg-card">
           <CardHeader className="pb-3">
             <CardTitle className="flex items-center gap-2 text-base"><ScanLine className="h-4 w-4 text-primary" /> Quick check-in</CardTitle>
             <CardDescription>Type or scan the member number (FIT#####).</CardDescription>
@@ -97,19 +97,19 @@ export default function AdminAttendancePage() {
           <CardContent>
             <form onSubmit={checkin} className="grid gap-3">
               <div className="grid gap-1.5">
-                <Label htmlFor="mno" className="text-xs text-zinc-400">Member number</Label>
+                <Label htmlFor="mno" className="text-xs text-muted-foreground">Member number</Label>
                 <Input
                   id="mno"
                   value={number}
                   onChange={(e) => setNumber(e.target.value)}
                   placeholder="FIT00001"
                   autoFocus
-                  className="border-zinc-700 bg-zinc-950 font-mono text-zinc-100 placeholder:text-zinc-600"
+                  className="border-input bg-background font-mono text-foreground placeholder:text-muted-foreground"
                 />
               </div>
               <div className="grid gap-1.5">
-                <Label htmlFor="method" className="text-xs text-zinc-400">Method</Label>
-                <Select id="method" value={method} onChange={(e) => setMethod(e.target.value)} className="border-zinc-700 bg-zinc-950 text-zinc-100">
+                <Label htmlFor="method" className="text-xs text-muted-foreground">Method</Label>
+                <Select id="method" value={method} onChange={(e) => setMethod(e.target.value)} className="border-input bg-background text-foreground">
                   <option value="reception">Reception (desk)</option>
                   <option value="manual">Manual (staff assist)</option>
                   <option value="member_id">Member ID card</option>
@@ -121,7 +121,7 @@ export default function AdminAttendancePage() {
 
               {result && (
                 <div className={`flex items-start gap-2 rounded-lg border p-3 text-sm ${
-                  result.ok ? "border-emerald-800 bg-emerald-950 text-emerald-200" : "border-red-800 bg-red-950 text-red-200"
+                  result.ok ? "border-emerald-200 bg-emerald-50 text-emerald-800" : "border-red-200 bg-red-50 text-red-800"
                 }`}>
                   {result.ok ? <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0" /> : <XCircle className="mt-0.5 h-4 w-4 shrink-0" />}
                   {result.ok ? (
@@ -138,7 +138,7 @@ export default function AdminAttendancePage() {
           </CardContent>
         </Card>
 
-        <Card className="border-zinc-800 bg-zinc-900 lg:col-span-2">
+        <Card className="border-border bg-card lg:col-span-2">
           <CardHeader className="pb-3">
             <CardTitle className="text-base">Today’s visits</CardTitle>
             <CardDescription>{data?.meta.total ?? 0} check-ins recorded today</CardDescription>
@@ -151,14 +151,14 @@ export default function AdminAttendancePage() {
             ) : rows.length === 0 ? (
               <EmptyState title="No check-ins today" description="Scan a member number to record the first visit." />
             ) : (
-              <div className="rounded-lg border border-zinc-800">
+              <div className="rounded-lg border border-border">
                 <Table>
                   <TableHeader>
-                    <TableRow className="border-zinc-800 hover:bg-transparent">
-                      <TableHead className="text-zinc-400">Member</TableHead>
-                      <TableHead className="text-zinc-400">Check-in</TableHead>
-                      <TableHead className="text-zinc-400">Check-out</TableHead>
-                      <TableHead className="text-zinc-400">Method</TableHead>
+                    <TableRow className="border-border hover:bg-transparent">
+                      <TableHead className="text-muted-foreground">Member</TableHead>
+                      <TableHead className="text-muted-foreground">Check-in</TableHead>
+                      <TableHead className="text-muted-foreground">Check-out</TableHead>
+                      <TableHead className="text-muted-foreground">Method</TableHead>
                       <TableHead />
                     </TableRow>
                   </TableHeader>
@@ -166,17 +166,17 @@ export default function AdminAttendancePage() {
                     {rows.map((r) => {
                       const mem = typeof r.member === "object" ? r.member : null;
                       return (
-                        <TableRow key={r.id} className="border-zinc-800">
+                        <TableRow key={r.id} className="border-border">
                           <TableCell>
                             <span className="font-medium">{mem ? `${mem.firstName ?? ""} ${mem.lastName ?? ""}`.trim() || mem.memberNumber : "—"}</span>
-                            {mem?.memberNumber && <span className="block font-mono text-xs text-zinc-500">{mem.memberNumber}</span>}
+                            {mem?.memberNumber && <span className="block font-mono text-xs text-muted-foreground/75">{mem.memberNumber}</span>}
                           </TableCell>
-                          <TableCell className="whitespace-nowrap text-zinc-300">{fmtDateTime(r.checkInAt)}</TableCell>
-                          <TableCell className="whitespace-nowrap text-zinc-400">{r.checkOutAt ? fmtDateTime(r.checkOutAt) : "—"}</TableCell>
+                          <TableCell className="whitespace-nowrap text-foreground/75">{fmtDateTime(r.checkInAt)}</TableCell>
+                          <TableCell className="whitespace-nowrap text-muted-foreground">{r.checkOutAt ? fmtDateTime(r.checkOutAt) : "—"}</TableCell>
                           <TableCell><Badge variant="secondary" className="capitalize">{r.method.replace("_", " ")}</Badge></TableCell>
                           <TableCell className="text-right">
                             {!r.checkOutAt && mem?._id && (
-                              <Button size="sm" variant="outline" className="border-zinc-700 bg-transparent text-zinc-300" onClick={() => checkout(r)}>
+                              <Button size="sm" variant="outline" className="border-input bg-transparent text-foreground/75" onClick={() => checkout(r)}>
                                 <LogOut className="h-3.5 w-3.5" /> Check out
                               </Button>
                             )}

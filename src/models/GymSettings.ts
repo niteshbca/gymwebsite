@@ -41,15 +41,15 @@ export interface GymSettingsDoc extends mongoose.Document {
 
 const GymSettingsSchema = new Schema<GymSettingsDoc>(
   {
-    gymName: { type: String, default: "FitPro Gym" },
-    tagline: { type: String, default: "Train Hard. Live Strong." },
+    gymName: { type: String, default: "NiteshPro" },
+    tagline: { type: String, default: "Strength. Style. Discipline." },
     logoUrl: { type: String, default: "" },
     faviconUrl: { type: String, default: "" },
     address: { type: String, default: "12 Fitness Avenue, Andheri West" },
     city: { type: String, default: "Mumbai" },
     phone: { type: String, default: "+91 98765 43210" },
-    email: { type: String, default: "hello@fitpro.local" },
-    website: { type: String, default: "https://fitpro.local" },
+    email: { type: String, default: "hello@niteshpro.in" },
+    website: { type: String, default: "https://niteshpro.in" },
     social: {
       type: { facebook: String, instagram: String, youtube: String, twitter: String },
       default: () => ({ facebook: "", instagram: "", youtube: "", twitter: "" }),
@@ -60,7 +60,7 @@ const GymSettingsSchema = new Schema<GymSettingsDoc>(
     taxPercentDefault: { type: Number, default: 18 },
     invoicePrefix: { type: String, default: "INV-" },
     invoiceNext: { type: Number, default: 1001 },
-    receiptFooter: { type: String, default: "Thank you for training with us!" },
+    receiptFooter: { type: String, default: "Thank you for training with NiteshPro." },
     membershipPolicy: { type: String, default: "Memberships are non-transferable. Please carry your member ID or QR at every visit." },
     cancellationPolicy: { type: String, default: "Cancellations must be requested in writing. Refunds are pro-rated as per plan cancellation terms." },
     refundPolicy: { type: String, default: "Refunds are processed within 7-10 business days to the original payment method." },
@@ -99,9 +99,9 @@ const GymSettingsSchema = new Schema<GymSettingsDoc>(
     hero: {
       type: { title: String, subtitle: String, ctaText: String, imageUrl: String },
       default: () => ({
-        title: "Stronger Every Single Day",
-        subtitle: "Premium coaching, science-backed programs and a community that shows up. Your first step starts here.",
-        ctaText: "Start Free Enquiry",
+        title: "Unleash Your Strongest Self",
+        subtitle: "Elite coaches, boutique equipment and members-only experiences — NiteshPro is where ambition meets discipline.",
+        ctaText: "Claim Your Free Trial",
         imageUrl: "",
       }),
     },
@@ -110,7 +110,7 @@ const GymSettingsSchema = new Schema<GymSettingsDoc>(
     expiryReminderWindowsDays: { type: [Number], default: [7, 3, 1] },
     allowPartialPayments: { type: Boolean, default: true },
     allowSelfRegistration: { type: Boolean, default: true },
-    themePrimary: { type: String, default: "#f97316" },
+    themePrimary: { type: String, default: "#C8891B" },
   },
   { timestamps: true },
 );

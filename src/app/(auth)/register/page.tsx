@@ -43,7 +43,7 @@ export default function RegisterPage() {
   return (
     <div className="flex min-h-screen items-center justify-center bg-muted/40 px-4 py-10">
       <Card className="w-full max-w-md">
-        <CardHeader><CardTitle>Create your account</CardTitle><CardDescription>Join FitPro as a member</CardDescription></CardHeader>
+        <CardHeader><CardTitle>Create your NiteshPro account</CardTitle><CardDescription>Join NiteshPro as a member</CardDescription></CardHeader>
         <CardContent>
           <form onSubmit={submit} className="grid gap-4">
             <div className="grid gap-2"><Label htmlFor="name">Full name</Label><Input id="name" required minLength={2} value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} /></div>

@@ -51,7 +51,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         onClick={() => setOpen(false)}
         className={cn(
           "flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors",
-          active ? "bg-primary text-primary-foreground" : "text-zinc-300 hover:bg-zinc-800 hover:text-white",
+          active ? "bg-primary text-primary-foreground shadow-md shadow-black/20" : "text-zinc-300 hover:bg-white/[0.07] hover:text-white",
         )}
       >
         <n.icon className="h-4 w-4" />
@@ -61,12 +61,12 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   };
 
   return (
-    <div className="min-h-screen bg-zinc-950 text-zinc-100">
+    <div className="min-h-screen bg-background text-foreground">
       {/* Mobile top bar */}
-      <div className="flex items-center justify-between border-b border-zinc-800 px-4 py-3 lg:hidden">
+      <div className="flex items-center justify-between border-b border-border px-4 py-3 lg:hidden">
         <Link href="/admin" className="flex items-center gap-2 font-bold">
           <span className="rounded-lg bg-primary p-1.5 text-primary-foreground"><Dumbbell className="h-4 w-4" /></span>
-          Admin
+          NiteshPro
         </Link>
         <button onClick={() => setOpen(!open)} aria-label="Menu">
           {open ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
@@ -76,23 +76,26 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       <div className="flex">
         {/* Sidebar */}
         <aside className={cn(
-          "fixed inset-y-0 left-0 z-40 w-64 border-r border-zinc-800 bg-zinc-900 p-4 transition-transform lg:static lg:translate-x-0",
+          "fixed inset-y-0 left-0 z-40 w-64 border-r border-black/40 bg-[#0E1626] p-4 transition-transform lg:static lg:translate-x-0",
           open ? "translate-x-0" : "-translate-x-full",
         )}>
-          <Link href="/admin" className="mb-8 hidden items-center gap-2 font-bold lg:flex">
-            <span className="rounded-lg bg-primary p-1.5 text-primary-foreground"><Dumbbell className="h-5 w-5" /></span>
-            <span>FitPro Admin</span>
+          <Link href="/admin" className="mb-8 hidden items-center gap-2.5 lg:flex">
+            <span className="rounded-xl bg-primary p-2 shadow-lg shadow-primary/30"><Dumbbell className="h-5 w-5 text-white" /></span>
+            <span className="leading-tight">
+              <span className="block text-lg font-bold tracking-tight text-white">NiteshPro</span>
+              <span className="block text-[10px] font-semibold uppercase tracking-[0.2em] text-primary">Admin CRM</span>
+            </span>
           </Link>
           <nav className="grid gap-1">
             {NAV.map(link)}
-            <p className="mt-5 px-3 pb-1 text-[11px] font-semibold uppercase tracking-wider text-zinc-500">Manage</p>
+            <p className="mt-5 px-3 pb-1 text-[11px] font-semibold uppercase tracking-wider text-white/40">Manage</p>
             {NAV_GROUP2.map(link)}
           </nav>
           <div className="absolute inset-x-4 bottom-4 grid gap-1">
-            <Link href="/" target="_blank" className="flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-zinc-300 hover:bg-zinc-800">
+            <Link href="/" target="_blank" className="flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-zinc-300 hover:bg-white/[0.07] hover:text-white">
               <ExternalLink className="h-4 w-4" /> View website
             </Link>
-            <button onClick={logout} className="flex items-center gap-3 rounded-lg px-3 py-2 text-left text-sm font-medium text-zinc-300 hover:bg-zinc-800">
+            <button onClick={logout} className="flex items-center gap-3 rounded-lg px-3 py-2 text-left text-sm font-medium text-zinc-300 hover:bg-white/[0.07] hover:text-white">
               <LogOut className="h-4 w-4" /> Sign out
             </button>
           </div>
@@ -104,9 +107,9 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             <div />
             <div className="flex items-center gap-3">
               <span className="relative inline-flex">
-                <Bell className="h-5 w-5 text-zinc-400" />
+                <Bell className="h-5 w-5 text-muted-foreground" />
               </span>
-              <span className="rounded-full bg-zinc-800 px-3 py-1 text-xs font-medium capitalize text-zinc-300">
+              <span className="rounded-full bg-muted px-3 py-1 text-xs font-medium capitalize text-foreground/75">
                 {me ? `${me.name} · ${me.role.replace("_", " ")}` : "Staff"}
               </span>
             </div>

@@ -152,7 +152,7 @@ export default function AdminClassesPage() {
       <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
         <div>
           <h1 className="text-2xl font-bold">Class schedule</h1>
-          <p className="text-sm text-zinc-400">Weekly recurring classes — members book seats against capacity.</p>
+          <p className="text-sm text-muted-foreground">Weekly recurring classes — members book seats against capacity.</p>
         </div>
         <Button onClick={openCreate}><Plus className="h-4 w-4" /> New class</Button>
       </div>
@@ -169,28 +169,28 @@ export default function AdminClassesPage() {
 
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {(classes ?? []).map((c) => (
-          <Card key={c.id} className="border-zinc-800 bg-zinc-900">
+          <Card key={c.id} className="border-border bg-card">
             <CardContent className="grid gap-2 p-4">
               <div className="flex items-start justify-between gap-2">
                 <p className="font-semibold leading-tight">{c.name}</p>
                 <Badge variant={c.active ? "success" : "secondary"}>{c.active ? "active" : "off"}</Badge>
               </div>
-              <p className="text-xs text-zinc-400">
+              <p className="text-xs text-muted-foreground">
                 {DAYS[c.dayOfWeek]} · <Clock className="inline h-3 w-3" /> {c.startTime}–{c.endTime} · {c.room}
               </p>
-              <div className="flex flex-wrap gap-2 text-xs text-zinc-400">
+              <div className="flex flex-wrap gap-2 text-xs text-muted-foreground">
                 <span className="inline-flex items-center gap-1"><Users className="h-3 w-3" /> {c.capacity} seats (+{c.waitlistCapacity} waitlist)</span>
                 {c.requiresPlanAccess && <Badge variant="info">members only</Badge>}
               </div>
-              {c.trainer && <p className="text-xs text-zinc-500">Coach: {c.trainer.name}</p>}
+              {c.trainer && <p className="text-xs text-muted-foreground/75">Coach: {c.trainer.name}</p>}
               <div className="mt-1 flex gap-2">
-                <Button size="sm" variant="outline" className="border-zinc-700 bg-transparent" onClick={() => openEdit(c)}>
+                <Button size="sm" variant="outline" className="border-input bg-transparent" onClick={() => openEdit(c)}>
                   <Pencil className="h-3.5 w-3.5" /> Edit
                 </Button>
                 <Button
                   size="sm"
                   variant="outline"
-                  className={`border-zinc-700 bg-transparent ${c.active ? "text-zinc-400" : "text-emerald-400"}`}
+                  className={`border-input bg-transparent ${c.active ? "text-muted-foreground" : "text-emerald-600"}`}
                   disabled={busy}
                   onClick={() => toggle(c)}
                 >
@@ -210,70 +210,70 @@ export default function AdminClassesPage() {
           </DialogHeader>
           <div className="grid gap-4">
             <div className="grid gap-1.5">
-              <Label htmlFor="cname" className="text-xs text-zinc-400">Class name <span className="text-red-400">*</span></Label>
-              <Input id="cname" value={form.name} onChange={(e) => set("name", e.target.value)} placeholder="e.g. Morning HIIT" className="border-zinc-700 bg-zinc-950 text-zinc-100" />
+              <Label htmlFor="cname" className="text-xs text-muted-foreground">Class name <span className="text-red-600">*</span></Label>
+              <Input id="cname" value={form.name} onChange={(e) => set("name", e.target.value)} placeholder="e.g. Morning HIIT" className="border-input bg-background text-foreground" />
             </div>
             <div className="grid gap-1.5">
-              <Label htmlFor="cdesc" className="text-xs text-zinc-400">Description</Label>
-              <Textarea id="cdesc" value={form.description} onChange={(e) => set("description", e.target.value)} rows={2} className="border-zinc-700 bg-zinc-950 text-zinc-100" />
+              <Label htmlFor="cdesc" className="text-xs text-muted-foreground">Description</Label>
+              <Textarea id="cdesc" value={form.description} onChange={(e) => set("description", e.target.value)} rows={2} className="border-input bg-background text-foreground" />
             </div>
             <div className="grid gap-4 sm:grid-cols-3">
               <div className="grid gap-1.5">
-                <Label htmlFor="cday" className="text-xs text-zinc-400">Day</Label>
-                <Select id="cday" value={String(form.dayOfWeek)} onChange={(e) => set("dayOfWeek", Number(e.target.value))} className="border-zinc-700 bg-zinc-950 text-zinc-100">
+                <Label htmlFor="cday" className="text-xs text-muted-foreground">Day</Label>
+                <Select id="cday" value={String(form.dayOfWeek)} onChange={(e) => set("dayOfWeek", Number(e.target.value))} className="border-input bg-background text-foreground">
                   {DAYS.map((d, i) => <option key={d} value={i}>{d}</option>)}
                 </Select>
               </div>
               <div className="grid gap-1.5">
-                <Label htmlFor="cstart" className="text-xs text-zinc-400">Start</Label>
-                <Input id="cstart" type="time" value={form.startTime} onChange={(e) => set("startTime", e.target.value)} className="border-zinc-700 bg-zinc-950 text-zinc-100" />
+                <Label htmlFor="cstart" className="text-xs text-muted-foreground">Start</Label>
+                <Input id="cstart" type="time" value={form.startTime} onChange={(e) => set("startTime", e.target.value)} className="border-input bg-background text-foreground" />
               </div>
               <div className="grid gap-1.5">
-                <Label htmlFor="cend" className="text-xs text-zinc-400">End</Label>
-                <Input id="cend" type="time" value={form.endTime} onChange={(e) => set("endTime", e.target.value)} className="border-zinc-700 bg-zinc-950 text-zinc-100" />
-              </div>
-            </div>
-            <div className="grid gap-4 sm:grid-cols-3">
-              <div className="grid gap-1.5">
-                <Label htmlFor="croom" className="text-xs text-zinc-400">Room</Label>
-                <Input id="croom" value={form.room} onChange={(e) => set("room", e.target.value)} className="border-zinc-700 bg-zinc-950 text-zinc-100" />
-              </div>
-              <div className="grid gap-1.5">
-                <Label htmlFor="ccap" className="text-xs text-zinc-400">Capacity</Label>
-                <Input id="ccap" type="number" min="1" value={form.capacity} onChange={(e) => set("capacity", Number(e.target.value))} className="border-zinc-700 bg-zinc-950 text-zinc-100" />
-              </div>
-              <div className="grid gap-1.5">
-                <Label htmlFor="cwait" className="text-xs text-zinc-400">Waitlist</Label>
-                <Input id="cwait" type="number" min="0" value={form.waitlistCapacity} onChange={(e) => set("waitlistCapacity", Number(e.target.value))} className="border-zinc-700 bg-zinc-950 text-zinc-100" />
+                <Label htmlFor="cend" className="text-xs text-muted-foreground">End</Label>
+                <Input id="cend" type="time" value={form.endTime} onChange={(e) => set("endTime", e.target.value)} className="border-input bg-background text-foreground" />
               </div>
             </div>
             <div className="grid gap-4 sm:grid-cols-3">
               <div className="grid gap-1.5">
-                <Label htmlFor="ctrainer" className="text-xs text-zinc-400">Trainer</Label>
-                <Select id="ctrainer" value={form.trainer} onChange={(e) => set("trainer", e.target.value)} className="border-zinc-700 bg-zinc-950 text-zinc-100">
+                <Label htmlFor="croom" className="text-xs text-muted-foreground">Room</Label>
+                <Input id="croom" value={form.room} onChange={(e) => set("room", e.target.value)} className="border-input bg-background text-foreground" />
+              </div>
+              <div className="grid gap-1.5">
+                <Label htmlFor="ccap" className="text-xs text-muted-foreground">Capacity</Label>
+                <Input id="ccap" type="number" min="1" value={form.capacity} onChange={(e) => set("capacity", Number(e.target.value))} className="border-input bg-background text-foreground" />
+              </div>
+              <div className="grid gap-1.5">
+                <Label htmlFor="cwait" className="text-xs text-muted-foreground">Waitlist</Label>
+                <Input id="cwait" type="number" min="0" value={form.waitlistCapacity} onChange={(e) => set("waitlistCapacity", Number(e.target.value))} className="border-input bg-background text-foreground" />
+              </div>
+            </div>
+            <div className="grid gap-4 sm:grid-cols-3">
+              <div className="grid gap-1.5">
+                <Label htmlFor="ctrainer" className="text-xs text-muted-foreground">Trainer</Label>
+                <Select id="ctrainer" value={form.trainer} onChange={(e) => set("trainer", e.target.value)} className="border-input bg-background text-foreground">
                   <option value="">No trainer</option>
                   {(trainers ?? []).filter((t) => t.active !== false).map((t) => <option key={t.id} value={t.id}>{t.name}</option>)}
                 </Select>
               </div>
               <div className="grid gap-1.5">
-                <Label htmlFor="cwindow" className="text-xs text-zinc-400">Booking window (h)</Label>
-                <Input id="cwindow" type="number" min="1" value={form.bookingWindowHours} onChange={(e) => set("bookingWindowHours", Number(e.target.value))} className="border-zinc-700 bg-zinc-950 text-zinc-100" />
+                <Label htmlFor="cwindow" className="text-xs text-muted-foreground">Booking window (h)</Label>
+                <Input id="cwindow" type="number" min="1" value={form.bookingWindowHours} onChange={(e) => set("bookingWindowHours", Number(e.target.value))} className="border-input bg-background text-foreground" />
               </div>
               <div className="grid gap-1.5">
-                <Label htmlFor="ccancel" className="text-xs text-zinc-400">Cancel cutoff (h)</Label>
-                <Input id="ccancel" type="number" min="0" value={form.cancelCutoffHours} onChange={(e) => set("cancelCutoffHours", Number(e.target.value))} className="border-zinc-700 bg-zinc-950 text-zinc-100" />
+                <Label htmlFor="ccancel" className="text-xs text-muted-foreground">Cancel cutoff (h)</Label>
+                <Input id="ccancel" type="number" min="0" value={form.cancelCutoffHours} onChange={(e) => set("cancelCutoffHours", Number(e.target.value))} className="border-input bg-background text-foreground" />
               </div>
             </div>
-            <label className="flex cursor-pointer items-center gap-2 text-sm text-zinc-300">
+            <label className="flex cursor-pointer items-center gap-2 text-sm text-foreground/75">
               <input type="checkbox" className="accent-primary" checked={form.requiresPlanAccess} onChange={(e) => set("requiresPlanAccess", e.target.checked)} />
               Require active membership to book
             </label>
             {!editing && !me?.branch && (
-              <p className="text-xs text-amber-400">Your account has no branch — assign one to your staff account first.</p>
+              <p className="text-xs text-amber-600">Your account has no branch — assign one to your staff account first.</p>
             )}
           </div>
           <DialogFooter>
-            <Button variant="outline" className="border-zinc-700 bg-transparent" onClick={() => setOpen(false)}>Cancel</Button>
+            <Button variant="outline" className="border-input bg-transparent" onClick={() => setOpen(false)}>Cancel</Button>
             <Button onClick={save} disabled={busy}>{busy ? "Saving..." : editing ? "Save changes" : "Create class"}</Button>
           </DialogFooter>
         </DialogContent>

@@ -30,21 +30,22 @@ export default function HomePage() {
   return (
     <>
       {/* Hero */}
-      <section className="relative overflow-hidden bg-zinc-950 text-white">
-        <div className="absolute inset-0 bg-gradient-to-br from-orange-600/20 via-transparent to-zinc-950" />
+      <section className="relative overflow-hidden bg-[#0B1220] text-white">
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/25 via-transparent to-[#0B1220]" />
+        <div className="absolute -top-32 right-0 h-96 w-96 rounded-full bg-primary/20 blur-3xl" />
         {s?.hero.imageUrl && (
           // eslint-disable-next-line @next/next/no-img-element
-          <img src={s.hero.imageUrl} alt="" className="absolute inset-0 h-full w-full object-cover opacity-30" />
+          <img src={s.hero.imageUrl} alt="" className="absolute inset-0 h-full w-full object-cover opacity-25" />
         )}
         <div className="relative mx-auto max-w-7xl px-4 py-24 md:py-32">
-          <p className="text-sm font-semibold uppercase tracking-widest text-orange-400">{s?.tagline}</p>
-          <h1 className="mt-3 max-w-3xl text-4xl font-extrabold tracking-tight text-balance md:text-6xl">
+          <p className="text-sm font-semibold uppercase tracking-[0.25em] text-primary">{s?.tagline}</p>
+          <h1 className="mt-4 max-w-3xl text-4xl font-semibold leading-[1.05] tracking-tight text-balance md:text-6xl">
             {s?.hero.title ?? "Stronger Every Single Day"}
           </h1>
-          <p className="mt-5 max-w-2xl text-lg text-zinc-300">{s?.hero.subtitle}</p>
+          <p className="mt-5 max-w-2xl text-lg leading-relaxed text-zinc-300">{s?.hero.subtitle}</p>
           <div className="mt-8 flex flex-wrap gap-3">
             <Link href="/contact"><Button size="lg" className="text-base">{s?.hero.ctaText ?? "Start Free Enquiry"} <ArrowRight /></Button></Link>
-            <Link href="/plans"><Button size="lg" variant="outline" className="border-zinc-600 bg-transparent text-base text-white hover:bg-zinc-900">View Plans</Button></Link>
+            <Link href="/plans"><Button size="lg" variant="outline" className="border-white/25 bg-transparent text-base text-white hover:border-primary hover:bg-primary/10">View Plans</Button></Link>
           </div>
         </div>
       </section>
@@ -87,7 +88,7 @@ export default function HomePage() {
                   <CardDescription>{p.description}</CardDescription>
                 </CardHeader>
                 <CardContent className="flex-1">
-                  <p className="text-3xl font-extrabold">{money(p.priceMinor)}
+                  <p className="text-3xl font-semibold">{money(p.priceMinor)}
                     <span className="text-sm font-normal text-muted-foreground"> / {p.durationValue} {p.durationUnit}{p.durationValue > 1 ? "s" : ""}</span>
                   </p>
                   <ul className="mt-4 space-y-2 text-sm">

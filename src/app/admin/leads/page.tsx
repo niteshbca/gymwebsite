@@ -63,7 +63,7 @@ export default function AdminLeadsPage() {
     <div className="grid gap-6">
       <div className="flex flex-col gap-1">
         <h1 className="text-2xl font-bold">Enquiries & leads</h1>
-        <p className="text-sm text-zinc-400">Website forms and walk-in enquiries — move them along the pipeline.</p>
+        <p className="text-sm text-muted-foreground">Website forms and walk-in enquiries — move them along the pipeline.</p>
       </div>
 
       <div className="flex flex-wrap items-center gap-2">
@@ -72,7 +72,7 @@ export default function AdminLeadsPage() {
             key={s}
             onClick={() => setStatus(s)}
             className={`rounded-full px-3 py-1 text-xs font-semibold capitalize transition-colors ${
-              status === s ? "bg-primary text-primary-foreground" : "bg-zinc-800 text-zinc-300 hover:bg-zinc-700"
+              status === s ? "bg-primary text-primary-foreground" : "bg-muted text-foreground/75 hover:bg-muted"
             }`}
           >
             {s}
@@ -83,61 +83,61 @@ export default function AdminLeadsPage() {
           onSubmit={(e) => { e.preventDefault(); setSearch(q.trim()); }}
         >
           <div className="relative flex-1">
-            <Search className="absolute left-2.5 top-2.5 h-3.5 w-3.5 text-zinc-500" />
+            <Search className="absolute left-2.5 top-2.5 h-3.5 w-3.5 text-muted-foreground/75" />
             <Input
               value={q}
               onChange={(e) => setQ(e.target.value)}
               placeholder="Name, phone, email..."
-              className="border-zinc-700 bg-zinc-900 pl-8 text-zinc-100 placeholder:text-zinc-500"
+              className="border-input bg-card pl-8 text-foreground placeholder:text-muted-foreground/75"
             />
           </div>
-          <Button type="submit" size="sm" variant="outline" className="border-zinc-700 bg-transparent">Search</Button>
+          <Button type="submit" size="sm" variant="outline" className="border-input bg-transparent">Search</Button>
         </form>
       </div>
 
-      <div className="rounded-xl border border-zinc-800 bg-zinc-900">
+      <div className="rounded-xl border border-border bg-card">
         <Table>
           <TableHeader>
-            <TableRow className="border-zinc-800 hover:bg-transparent">
-              <TableHead className="text-zinc-400">Lead</TableHead>
-              <TableHead className="text-zinc-400">Interested in</TableHead>
-              <TableHead className="text-zinc-400">Source</TableHead>
-              <TableHead className="text-zinc-400">Follow-up</TableHead>
-              <TableHead className="text-zinc-400">Status</TableHead>
-              <TableHead className="text-zinc-400">Move to</TableHead>
+            <TableRow className="border-border hover:bg-transparent">
+              <TableHead className="text-muted-foreground">Lead</TableHead>
+              <TableHead className="text-muted-foreground">Interested in</TableHead>
+              <TableHead className="text-muted-foreground">Source</TableHead>
+              <TableHead className="text-muted-foreground">Follow-up</TableHead>
+              <TableHead className="text-muted-foreground">Status</TableHead>
+              <TableHead className="text-muted-foreground">Move to</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {isLoading && Array.from({ length: 6 }).map((_, i) => (
-              <TableRow key={i} className="border-zinc-800">
+              <TableRow key={i} className="border-border">
                 {Array.from({ length: 6 }).map((__, j) => <TableCell key={j}><Skeleton className="h-4 w-full" /></TableCell>)}
               </TableRow>
             ))}
             {!isLoading && rows.length === 0 && (
-              <TableRow className="border-zinc-800 hover:bg-transparent">
+              <TableRow className="border-border hover:bg-transparent">
                 <TableCell colSpan={6}><EmptyState title="No leads" description="Website enquiries will land here automatically." /></TableCell>
               </TableRow>
             )}
             {!isLoading && rows.map((l) => (
-              <TableRow key={l.id} className="border-zinc-800">
+              <TableRow key={l.id} className="border-border">
                 <TableCell>
                   <span className="font-medium">{l.name}</span>
-                  <span className="mt-0.5 flex items-center gap-1 text-xs text-zinc-400">
+                  <span className="mt-0.5 flex items-center gap-1 text-xs text-muted-foreground">
                     <Phone className="h-3 w-3" /> {l.phone}
-                    {l.email && <span className="text-zinc-500">· {l.email}</span>}
+                    {l.email && <span className="text-muted-foreground/75">· {l.email}</span>}
                   </span>
                 </TableCell>
-                <TableCell className="text-zinc-300">
+                <TableCell className="text-foreground/75">
                   {l.interestedPlan ? (
                     <>
                       {l.interestedPlan.name}
                     </>
                   ) : (
-                    <span className="text-zinc-500">—</span>
+                    <span className="text-muted-foreground/75">—</span>
                   )}
                 </TableCell>
                 <TableCell><Badge variant="secondary" className="capitalize">{l.source.replace("_", " ")}</Badge></TableCell>
-                <TableCell className="whitespace-nowrap text-zinc-400">
+                <TableCell className="whitespace-nowrap text-muted-foreground">
                   {l.followUpDate ? (
                     <span className="inline-flex items-center gap-1"><CalendarClock className="h-3.5 w-3.5" /> {fmtDate(l.followUpDate)}</span>
                   ) : "—"}
@@ -148,7 +148,7 @@ export default function AdminLeadsPage() {
                     value={l.status}
                     disabled={busy === l.id}
                     onChange={(e) => e.target.value !== l.status && changeStatus(l.id, e.target.value)}
-                    className="h-8 w-36 border-zinc-700 bg-zinc-950 text-xs text-zinc-100"
+                    className="h-8 w-36 border-input bg-background text-xs text-foreground"
                   >
                     {STATUSES.map((s) => <option key={s} value={s} className="capitalize">{s}</option>)}
                   </Select>
@@ -159,7 +159,7 @@ export default function AdminLeadsPage() {
         </Table>
       </div>
 
-      <p className="text-xs text-zinc-500">{data?.meta.total ?? 0} lead(s) total</p>
+      <p className="text-xs text-muted-foreground/75">{data?.meta.total ?? 0} lead(s) total</p>
     </div>
   );
 }

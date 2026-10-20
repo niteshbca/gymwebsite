@@ -87,7 +87,7 @@ export async function sendMail(opts: {
 
 export const emailTemplates = {
   welcome: (name: string, verifyUrl?: string) => ({
-    subject: `Welcome to FitPro, ${name}`,
+    subject: `Welcome to NiteshPro, ${name}`,
     html: layout(
       `Welcome, ${escapeHtml(name)}!`,
       `<p>Your account has been created.</p>${verifyUrl ? `<p><a href="${verifyUrl}">Verify your email</a></p>` : ""}`,
@@ -176,15 +176,15 @@ function layout(title: string, body: string) {
     <h2 style="margin:0 0 12px;color:#18181b">${title}</h2>
     <div style="color:#3f3f46;line-height:1.6">${body}</div>
     <hr style="border:none;border-top:1px solid #e4e4e7;margin:20px 0"/>
-    <p style="color:#71717a;font-size:12px">FitPro Gym Management · This is an automated message.</p>
+    <p style="color:#71717a;font-size:12px">NiteshPro Gym Management · This is an automated message.</p>
   </div></body></html>`;
 }
 
 /** Digital entry pass block embedded in confirmation emails. */
 function passHtml(passCode: string, className: string, when: string, gymName: string) {
-  const qr = `https://api.qrserver.com/v1/create-qr-code/?size=140x140&margin=0&data=${encodeURIComponent(`FITPRO-PASS:${passCode}`)}`;
-  return `<div style="margin:20px 0;border:2px dashed #16a34a;border-radius:12px;overflow:hidden">
-    <div style="background:#16a34a;color:#fff;padding:12px 16px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;font-size:12px">
+  const qr = `https://api.qrserver.com/v1/create-qr-code/?size=140x140&margin=0&data=${encodeURIComponent(`NITESHPRO-PASS:${passCode}`)}`;
+  return `<div style="margin:20px 0;border:2px dashed #C8891B;border-radius:12px;overflow:hidden">
+    <div style="background:#C8891B;color:#fff;padding:12px 16px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;font-size:12px">
       ${escapeHtml(gymName)} · Entry Pass
     </div>
     <div style="display:flex;gap:16px;padding:16px;align-items:center">

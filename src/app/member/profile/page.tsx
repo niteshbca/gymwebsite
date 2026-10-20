@@ -105,13 +105,13 @@ export default function MemberProfilePage() {
 
   const text = (k: string, label: string, type = "text") => (
     <div className="grid gap-1.5">
-      <label className="text-xs font-medium text-zinc-400" htmlFor={k}>{label}</label>
+      <label className="text-xs font-medium text-muted-foreground" htmlFor={k}>{label}</label>
       <Input
         id={k}
         type={type}
         value={String(form[k] ?? "")}
         onChange={(e) => set(k, e.target.value)}
-        className="border-zinc-700 bg-zinc-950 text-zinc-100"
+        className="border-input bg-background text-foreground"
       />
     </div>
   );
@@ -120,41 +120,41 @@ export default function MemberProfilePage() {
     <div className="grid gap-6">
       <div>
         <h1 className="text-2xl font-bold">My profile</h1>
-        <p className="text-sm text-zinc-400">Keep your contact details and health notes current.</p>
+        <p className="text-sm text-muted-foreground">Keep your contact details and health notes current.</p>
       </div>
 
       <div className="grid gap-4 lg:grid-cols-3">
-        <Card className="border-zinc-800 bg-zinc-900">
+        <Card className="border-border bg-card">
           <CardContent className="grid gap-3 p-5 text-sm">
             <div className="flex items-center gap-3">
-              <span className="rounded-full bg-zinc-800 p-2.5"><User className="h-5 w-5 text-zinc-300" /></span>
+              <span className="rounded-full bg-muted p-2.5"><User className="h-5 w-5 text-foreground/75" /></span>
               <div>
                 <p className="font-semibold">{me.profile.fullName}</p>
-                <p className="text-xs text-zinc-400">#{me.profile.memberNumber}</p>
+                <p className="text-xs text-muted-foreground">#{me.profile.memberNumber}</p>
               </div>
             </div>
-            <div className="flex items-center justify-between border-t border-zinc-800 pt-3">
-              <span className="text-zinc-400">Status</span>
+            <div className="flex items-center justify-between border-t border-border pt-3">
+              <span className="text-muted-foreground">Status</span>
               <Badge variant={me.profile.status === "active" ? "success" : "secondary"}>{me.profile.status}</Badge>
             </div>
             <div className="flex items-center justify-between">
-              <span className="text-zinc-400">Member since</span>
+              <span className="text-muted-foreground">Member since</span>
               <span>{fmtDate(me.profile.joinDate)}</span>
             </div>
             {me.membership && (
               <div className="flex items-center justify-between">
-                <span className="text-zinc-400">Membership</span>
+                <span className="text-muted-foreground">Membership</span>
                 <span className="text-right">{me.membership.planSnapshot.name}</span>
               </div>
             )}
-            <p className="mt-2 flex items-start gap-2 rounded-lg bg-zinc-950 p-3 text-xs text-zinc-400">
-              <ShieldCheck className="mt-0.5 h-4 w-4 shrink-0 text-emerald-400" />
+            <p className="mt-2 flex items-start gap-2 rounded-lg bg-background p-3 text-xs text-muted-foreground">
+              <ShieldCheck className="mt-0.5 h-4 w-4 shrink-0 text-emerald-600" />
               Name, membership and payment details are managed by the front desk — contact us to change them.
             </p>
           </CardContent>
         </Card>
 
-        <Card className="border-zinc-800 bg-zinc-900 lg:col-span-2">
+        <Card className="border-border bg-card lg:col-span-2">
           <CardHeader className="pb-3">
             <CardTitle className="text-base">Contact & health details</CardTitle>
             <CardDescription>Changes are logged and visible to gym staff.</CardDescription>
@@ -170,30 +170,30 @@ export default function MemberProfilePage() {
               {text("emergencyContactPhone", "Emergency contact phone", "tel")}
             </div>
             <div className="grid gap-1.5">
-              <label className="text-xs font-medium text-zinc-400" htmlFor="goals">Fitness goals</label>
+              <label className="text-xs font-medium text-muted-foreground" htmlFor="goals">Fitness goals</label>
               <textarea
                 id="goals"
                 value={String(form.goals ?? "")}
                 onChange={(e) => set("goals", e.target.value)}
                 rows={3}
-                className="rounded-md border border-zinc-700 bg-zinc-950 px-3 py-2 text-sm text-zinc-100 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+                className="rounded-md border border-input bg-background px-3 py-2 text-sm text-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
                 placeholder="e.g. Lose 8 kg in 6 months, run a half marathon..."
               />
             </div>
             <div className="grid gap-1.5">
-              <label className="text-xs font-medium text-zinc-400" htmlFor="healthInfo">Health notes</label>
+              <label className="text-xs font-medium text-muted-foreground" htmlFor="healthInfo">Health notes</label>
               <textarea
                 id="healthInfo"
                 value={String(form.healthInfo ?? "")}
                 onChange={(e) => set("healthInfo", e.target.value)}
                 rows={3}
-                className="rounded-md border border-zinc-700 bg-zinc-950 px-3 py-2 text-sm text-zinc-100 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+                className="rounded-md border border-input bg-background px-3 py-2 text-sm text-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
                 placeholder="Injuries, allergies, conditions trainers should know..."
               />
             </div>
             <div className="flex flex-wrap gap-6">
               {(["consentMarketing", "consentHealthData"] as const).map((k) => (
-                <label key={k} className="flex cursor-pointer items-center gap-2 text-sm text-zinc-300">
+                <label key={k} className="flex cursor-pointer items-center gap-2 text-sm text-foreground/75">
                   <input
                     type="checkbox"
                     className="accent-primary"
@@ -204,7 +204,7 @@ export default function MemberProfilePage() {
                 </label>
               ))}
             </div>
-            <div className="flex justify-end border-t border-zinc-800 pt-4">
+            <div className="flex justify-end border-t border-border pt-4">
               <Button onClick={save} disabled={saving}>
                 <Save className="h-4 w-4" /> {saving ? "Saving..." : "Save changes"}
               </Button>

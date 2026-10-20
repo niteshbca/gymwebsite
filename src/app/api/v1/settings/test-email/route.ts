@@ -18,7 +18,7 @@ export const POST = withAuth("settings:update", async (req: NextRequest) => {
   }
   const result = await sendMail({
     to: body.to,
-    subject: "FitPro SMTP test",
+    subject: "NiteshPro SMTP test",
     html: `<p>This is a test email from <strong>${env.APP_URL}</strong>. If you received it, SMTP is working.</p>`,
     template: "smtp_test",
   });

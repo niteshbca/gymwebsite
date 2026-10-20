@@ -60,7 +60,7 @@ function ClassesInner() {
     <div className="mx-auto max-w-6xl px-4 py-16">
       <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
         <div>
-          <h1 className="text-4xl font-extrabold tracking-tight">Group classes</h1>
+          <h1 className="text-4xl font-semibold tracking-tight">Group classes</h1>
           <p className="mt-3 max-w-2xl text-muted-foreground">
             Book your spot online — pick a class, send a request and get your digital entry pass by email once our team confirms it.
             Members can also book instantly from the member portal.

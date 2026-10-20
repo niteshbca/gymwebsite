@@ -145,64 +145,64 @@ export default function AdminPlansPage() {
       <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
         <div>
           <h1 className="text-2xl font-bold">Membership plans</h1>
-          <p className="text-sm text-zinc-400">Pricing, duration, tax and access rules.</p>
+          <p className="text-sm text-muted-foreground">Pricing, duration, tax and access rules.</p>
         </div>
         <Button onClick={openCreate}><Plus className="h-4 w-4" /> New plan</Button>
       </div>
 
       <div className="relative max-w-xs">
-        <Search className="absolute left-2.5 top-2.5 h-3.5 w-3.5 text-zinc-500" />
-        <Input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search plans..." className="border-zinc-700 bg-zinc-900 pl-8 text-zinc-100 placeholder:text-zinc-500" />
+        <Search className="absolute left-2.5 top-2.5 h-3.5 w-3.5 text-muted-foreground/75" />
+        <Input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search plans..." className="border-input bg-card pl-8 text-foreground placeholder:text-muted-foreground/75" />
       </div>
 
-      <div className="rounded-xl border border-zinc-800 bg-zinc-900">
+      <div className="rounded-xl border border-border bg-card">
         <Table>
           <TableHeader>
-            <TableRow className="border-zinc-800 hover:bg-transparent">
-              <TableHead className="text-zinc-400">Code</TableHead>
-              <TableHead className="text-zinc-400">Plan</TableHead>
-              <TableHead className="text-zinc-400">Duration</TableHead>
-              <TableHead className="text-zinc-400">Price</TableHead>
-              <TableHead className="text-zinc-400">Tax</TableHead>
-              <TableHead className="text-zinc-400">Classes</TableHead>
-              <TableHead className="text-zinc-400">Status</TableHead>
+            <TableRow className="border-border hover:bg-transparent">
+              <TableHead className="text-muted-foreground">Code</TableHead>
+              <TableHead className="text-muted-foreground">Plan</TableHead>
+              <TableHead className="text-muted-foreground">Duration</TableHead>
+              <TableHead className="text-muted-foreground">Price</TableHead>
+              <TableHead className="text-muted-foreground">Tax</TableHead>
+              <TableHead className="text-muted-foreground">Classes</TableHead>
+              <TableHead className="text-muted-foreground">Status</TableHead>
               <TableHead />
             </TableRow>
           </TableHeader>
           <TableBody>
             {isLoading && Array.from({ length: 5 }).map((_, i) => (
-              <TableRow key={i} className="border-zinc-800">
+              <TableRow key={i} className="border-border">
                 {Array.from({ length: 8 }).map((__, j) => <TableCell key={j}><Skeleton className="h-4 w-full" /></TableCell>)}
               </TableRow>
             ))}
             {!isLoading && filtered.length === 0 && (
-              <TableRow className="border-zinc-800 hover:bg-transparent">
+              <TableRow className="border-border hover:bg-transparent">
                 <TableCell colSpan={8}><EmptyState title="No plans yet" description="Create your first membership plan." /></TableCell>
               </TableRow>
             )}
             {!isLoading && filtered.map((p) => (
-              <TableRow key={p.id} className="border-zinc-800">
-                <TableCell className="font-mono text-xs text-zinc-400">{p.code}</TableCell>
+              <TableRow key={p.id} className="border-border">
+                <TableCell className="font-mono text-xs text-muted-foreground">{p.code}</TableCell>
                 <TableCell>
                   <span className="font-medium">{p.name}</span>
-                  {p.description && <span className="block max-w-[220px] truncate text-xs text-zinc-500">{p.description}</span>}
+                  {p.description && <span className="block max-w-[220px] truncate text-xs text-muted-foreground/75">{p.description}</span>}
                 </TableCell>
-                <TableCell className="whitespace-nowrap text-zinc-300">{p.durationValue} {p.durationUnit}{p.durationValue > 1 ? "s" : ""}</TableCell>
+                <TableCell className="whitespace-nowrap text-foreground/75">{p.durationValue} {p.durationUnit}{p.durationValue > 1 ? "s" : ""}</TableCell>
                 <TableCell className="whitespace-nowrap font-semibold">{money(p.priceMinor)}
-                  {p.joiningFeeMinor > 0 && <span className="block text-xs font-normal text-zinc-500">+ {money(p.joiningFeeMinor)} joining</span>}
+                  {p.joiningFeeMinor > 0 && <span className="block text-xs font-normal text-muted-foreground/75">+ {money(p.joiningFeeMinor)} joining</span>}
                 </TableCell>
-                <TableCell className="text-zinc-400">{p.taxPercent}%{p.taxInclusive ? " incl." : ""}</TableCell>
-                <TableCell className="capitalize text-zinc-400">{p.classAccess}</TableCell>
+                <TableCell className="text-muted-foreground">{p.taxPercent}%{p.taxInclusive ? " incl." : ""}</TableCell>
+                <TableCell className="capitalize text-muted-foreground">{p.classAccess}</TableCell>
                 <TableCell>
                   {p.archived ? <Badge variant="destructive">archived</Badge> : p.active ? <Badge variant="success">active</Badge> : <Badge variant="secondary">inactive</Badge>}
                 </TableCell>
                 <TableCell className="text-right">
                   <div className="inline-flex gap-1">
-                    <Button size="sm" variant="outline" className="border-zinc-700 bg-transparent" onClick={() => openEdit(p)}>
+                    <Button size="sm" variant="outline" className="border-input bg-transparent" onClick={() => openEdit(p)}>
                       <Pencil className="h-3.5 w-3.5" />
                     </Button>
                     {!p.archived && (
-                      <Button size="sm" variant="outline" className="border-zinc-700 bg-transparent text-zinc-400" disabled={busy} onClick={() => archive(p)}>
+                      <Button size="sm" variant="outline" className="border-input bg-transparent text-muted-foreground" disabled={busy} onClick={() => archive(p)}>
                         <Archive className="h-3.5 w-3.5" />
                       </Button>
                     )}
@@ -223,43 +223,43 @@ export default function AdminPlansPage() {
           <div className="grid gap-4">
             <div className="grid gap-4 sm:grid-cols-2">
               <div className="grid gap-1.5">
-                <Label htmlFor="pname" className="text-xs text-zinc-400">Name <span className="text-red-400">*</span></Label>
-                <Input id="pname" value={form.name} onChange={(e) => set("name", e.target.value)} className="border-zinc-700 bg-zinc-950 text-zinc-100" />
+                <Label htmlFor="pname" className="text-xs text-muted-foreground">Name <span className="text-red-600">*</span></Label>
+                <Input id="pname" value={form.name} onChange={(e) => set("name", e.target.value)} className="border-input bg-background text-foreground" />
               </div>
               <div className="grid gap-1.5">
-                <Label htmlFor="pcode" className="text-xs text-zinc-400">Code {!editing && <span className="text-red-400">*</span>}</Label>
-                <Input id="pcode" value={form.code} disabled={!!editing} onChange={(e) => set("code", e.target.value)} placeholder="e.g. ANNUAL" className="border-zinc-700 bg-zinc-950 text-zinc-100 disabled:opacity-50" />
+                <Label htmlFor="pcode" className="text-xs text-muted-foreground">Code {!editing && <span className="text-red-600">*</span>}</Label>
+                <Input id="pcode" value={form.code} disabled={!!editing} onChange={(e) => set("code", e.target.value)} placeholder="e.g. ANNUAL" className="border-input bg-background text-foreground disabled:opacity-50" />
               </div>
             </div>
 
             <div className="grid gap-4 sm:grid-cols-3">
               <div className="grid gap-1.5">
-                <Label htmlFor="pprice" className="text-xs text-zinc-400">Price (₹) <span className="text-red-400">*</span></Label>
-                <Input id="pprice" type="number" min="0" value={form.price} onChange={(e) => set("price", e.target.value)} className="border-zinc-700 bg-zinc-950 text-zinc-100" />
+                <Label htmlFor="pprice" className="text-xs text-muted-foreground">Price (₹) <span className="text-red-600">*</span></Label>
+                <Input id="pprice" type="number" min="0" value={form.price} onChange={(e) => set("price", e.target.value)} className="border-input bg-background text-foreground" />
               </div>
               <div className="grid gap-1.5">
-                <Label htmlFor="pdur" className="text-xs text-zinc-400">Duration</Label>
+                <Label htmlFor="pdur" className="text-xs text-muted-foreground">Duration</Label>
                 <div className="flex gap-2">
-                  <Input id="pdur" type="number" min="1" value={form.durationValue} onChange={(e) => set("durationValue", Number(e.target.value))} className="border-zinc-700 bg-zinc-950 text-zinc-100" />
-                  <Select value={form.durationUnit} onChange={(e) => set("durationUnit", e.target.value)} className="border-zinc-700 bg-zinc-950 text-zinc-100">
+                  <Input id="pdur" type="number" min="1" value={form.durationValue} onChange={(e) => set("durationValue", Number(e.target.value))} className="border-input bg-background text-foreground" />
+                  <Select value={form.durationUnit} onChange={(e) => set("durationUnit", e.target.value)} className="border-input bg-background text-foreground">
                     {["day", "week", "month", "year"].map((u) => <option key={u} value={u}>{u}</option>)}
                   </Select>
                 </div>
               </div>
               <div className="grid gap-1.5">
-                <Label htmlFor="pjoin" className="text-xs text-zinc-400">Joining fee (₹)</Label>
-                <Input id="pjoin" type="number" min="0" value={form.joiningFee} onChange={(e) => set("joiningFee", e.target.value)} className="border-zinc-700 bg-zinc-950 text-zinc-100" />
+                <Label htmlFor="pjoin" className="text-xs text-muted-foreground">Joining fee (₹)</Label>
+                <Input id="pjoin" type="number" min="0" value={form.joiningFee} onChange={(e) => set("joiningFee", e.target.value)} className="border-input bg-background text-foreground" />
               </div>
             </div>
 
             <div className="grid gap-4 sm:grid-cols-3">
               <div className="grid gap-1.5">
-                <Label htmlFor="ptax" className="text-xs text-zinc-400">Tax %</Label>
-                <Input id="ptax" type="number" min="0" max="100" value={form.taxPercent} onChange={(e) => set("taxPercent", Number(e.target.value))} className="border-zinc-700 bg-zinc-950 text-zinc-100" />
+                <Label htmlFor="ptax" className="text-xs text-muted-foreground">Tax %</Label>
+                <Input id="ptax" type="number" min="0" max="100" value={form.taxPercent} onChange={(e) => set("taxPercent", Number(e.target.value))} className="border-input bg-background text-foreground" />
               </div>
               <div className="grid gap-1.5">
-                <Label htmlFor="pclass" className="text-xs text-zinc-400">Class access</Label>
-                <Select id="pclass" value={form.classAccess} onChange={(e) => set("classAccess", e.target.value)} className="border-zinc-700 bg-zinc-950 text-zinc-100">
+                <Label htmlFor="pclass" className="text-xs text-muted-foreground">Class access</Label>
+                <Select id="pclass" value={form.classAccess} onChange={(e) => set("classAccess", e.target.value)} className="border-input bg-background text-foreground">
                   <option value="none">None</option>
                   <option value="group">Group classes</option>
                   <option value="all">All classes</option>
@@ -267,24 +267,24 @@ export default function AdminPlansPage() {
               </div>
               {!editing && (
                 <div className="grid gap-1.5">
-                  <Label htmlFor="pcat" className="text-xs text-zinc-400">Category</Label>
-                  <Select id="pcat" value={form.category} onChange={(e) => set("category", e.target.value)} className="border-zinc-700 bg-zinc-950 text-zinc-100">
+                  <Label htmlFor="pcat" className="text-xs text-muted-foreground">Category</Label>
+                  <Select id="pcat" value={form.category} onChange={(e) => set("category", e.target.value)} className="border-input bg-background text-foreground">
                     {CATEGORIES.map((c) => <option key={c.value} value={c.value}>{c.label}</option>)}
                   </Select>
                 </div>
               )}
             </div>
 
-            <div className="flex flex-wrap gap-5 rounded-lg border border-zinc-800 p-3">
-              <label className="flex cursor-pointer items-center gap-2 text-sm text-zinc-300">
+            <div className="flex flex-wrap gap-5 rounded-lg border border-border p-3">
+              <label className="flex cursor-pointer items-center gap-2 text-sm text-foreground/75">
                 <input type="checkbox" className="accent-primary" checked={form.taxInclusive} onChange={(e) => set("taxInclusive", e.target.checked)} />
                 Tax inclusive
               </label>
-              <label className="flex cursor-pointer items-center gap-2 text-sm text-zinc-300">
+              <label className="flex cursor-pointer items-center gap-2 text-sm text-foreground/75">
                 <input type="checkbox" className="accent-primary" checked={form.freezeAllowed} onChange={(e) => set("freezeAllowed", e.target.checked)} />
                 Freezes allowed
               </label>
-              <label className="flex cursor-pointer items-center gap-2 text-sm text-zinc-300">
+              <label className="flex cursor-pointer items-center gap-2 text-sm text-foreground/75">
                 <input type="checkbox" className="accent-primary" checked={form.active} onChange={(e) => set("active", e.target.checked)} />
                 Active (sellable)
               </label>
@@ -293,18 +293,18 @@ export default function AdminPlansPage() {
             {form.freezeAllowed && (
               <div className="grid gap-4 sm:grid-cols-2">
                 <div className="grid gap-1.5">
-                  <Label htmlFor="pfrz" className="text-xs text-zinc-400">Max freezes</Label>
-                  <Input id="pfrz" type="number" min="0" value={form.maxFreezes} onChange={(e) => set("maxFreezes", Number(e.target.value))} className="border-zinc-700 bg-zinc-950 text-zinc-100" />
+                  <Label htmlFor="pfrz" className="text-xs text-muted-foreground">Max freezes</Label>
+                  <Input id="pfrz" type="number" min="0" value={form.maxFreezes} onChange={(e) => set("maxFreezes", Number(e.target.value))} className="border-input bg-background text-foreground" />
                 </div>
                 <div className="grid gap-1.5">
-                  <Label htmlFor="pfrzd" className="text-xs text-zinc-400">Max freeze days</Label>
-                  <Input id="pfrzd" type="number" min="0" value={form.freezeDaysMax} onChange={(e) => set("freezeDaysMax", Number(e.target.value))} className="border-zinc-700 bg-zinc-950 text-zinc-100" />
+                  <Label htmlFor="pfrzd" className="text-xs text-muted-foreground">Max freeze days</Label>
+                  <Input id="pfrzd" type="number" min="0" value={form.freezeDaysMax} onChange={(e) => set("freezeDaysMax", Number(e.target.value))} className="border-input bg-background text-foreground" />
                 </div>
               </div>
             )}
           </div>
           <DialogFooter>
-            <Button variant="outline" className="border-zinc-700 bg-transparent" onClick={() => setOpen(false)}>Cancel</Button>
+            <Button variant="outline" className="border-input bg-transparent" onClick={() => setOpen(false)}>Cancel</Button>
             <Button onClick={save} disabled={busy}>{busy ? "Saving..." : editing ? "Save changes" : "Create plan"}</Button>
           </DialogFooter>
         </DialogContent>

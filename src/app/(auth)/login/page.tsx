@@ -44,7 +44,7 @@ function LoginForm() {
         <CardHeader className="items-center text-center">
           <div className="rounded-xl bg-primary p-2 text-primary-foreground"><Dumbbell className="h-6 w-6" /></div>
           <CardTitle className="mt-2 text-2xl">Welcome back</CardTitle>
-          <CardDescription>Sign in to your FitPro account</CardDescription>
+          <CardDescription>Sign in to your NiteshPro account</CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={submit} className="grid gap-4">

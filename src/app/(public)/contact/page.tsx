@@ -12,7 +12,7 @@ function ContactInner() {
   const s = data?.settings;
   return (
     <div className="mx-auto max-w-6xl px-4 py-16">
-      <h1 className="text-4xl font-extrabold tracking-tight">Contact & enquiry</h1>
+      <h1 className="text-4xl font-semibold tracking-tight">Contact & enquiry</h1>
       <div className="mt-10 grid gap-10 lg:grid-cols-2">
         <div>
           <h2 className="text-xl font-semibold">Visit or call us</h2>

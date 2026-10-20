@@ -102,7 +102,7 @@ async function main() {
   // ---------- Settings ----------
   const settingsPayload: any = {
     gymName: "NiteshPro",
-    tagline: "Train Hard. Live Strong.",
+    tagline: "Strength. Style. Discipline.",
     logoUrl: "",
     address: "NiteshPro Fitness Studio, 12 Fitness Avenue",
     city: "Mumbai",
@@ -114,9 +114,9 @@ async function main() {
     timezone: "Asia/Kolkata",
     taxLabel: "GST",
     hero: {
-      title: "Stronger Every Single Day",
-      subtitle: "Premium coaching, science-backed programs and a community that shows up. Book a free class online — your first step starts here.",
-      ctaText: "Book Free Trial Class",
+      title: "Unleash Your Strongest Self",
+      subtitle: "Elite coaches, boutique equipment and members-only experiences. Book a free class online — your strongest self starts here.",
+      ctaText: "Claim Your Free Trial",
       imageUrl: img("1534438327276-14e5300c3a48", 1600),
     },
     facilities: [
@@ -157,7 +157,7 @@ async function main() {
     expiryReminderWindowsDays: [7, 3, 1],
     allowPartialPayments: true,
     allowSelfRegistration: true,
-    themePrimary: "#16a34a",
+    themePrimary: "#C8891B",
     openingHours: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].map((day) => ({ day, open: "06:00", close: "22:00", closed: false }))
       .concat([{ day: "Sun", open: "07:00", close: "13:00", closed: false }]),
   };
@@ -174,17 +174,17 @@ async function main() {
   const memberHash = await pw("Member@1234");
 
   const admin = await User.findOneAndUpdate(
-    { email: "admin@fitpro.in" },
+    { email: "admin@niteshpro.in" },
     {
-      email: "admin@fitpro.in", passwordHash: adminHash, name: "Nitesh Kumar", phone: "+91 88107 51872",
+      email: "admin@niteshpro.in", passwordHash: adminHash, name: "Nitesh Kumar", phone: "+91 88107 51872",
       role: "super_admin", branch: branch._id, status: "active", emailVerifiedAt: new Date(), permissions: [],
     },
     { upsert: true, new: true },
   );
   await User.findOneAndUpdate(
-    { email: "frontdesk@fitpro.in" },
+    { email: "frontdesk@niteshpro.in" },
     {
-      email: "frontdesk@fitpro.in", passwordHash: staffHash, name: "Reception Desk", phone: "+91 88107 51873",
+      email: "frontdesk@niteshpro.in", passwordHash: staffHash, name: "Reception Desk", phone: "+91 88107 51873",
       role: "receptionist", branch: branch._id, status: "active", emailVerifiedAt: new Date(), permissions: [],
     },
     { upsert: true, new: true },
@@ -202,7 +202,7 @@ async function main() {
   ];
   const trainers: any[] = [];
   for (const [i, t] of trainerDefs.entries()) {
-    const email = `${t.name.toLowerCase().replace(/[^a-z]+/g, ".")}@fitpro.in`;
+    const email = `${t.name.toLowerCase().replace(/[^a-z]+/g, ".")}@niteshpro.in`;
     const user = await User.findOneAndUpdate(
       { email },
       {
@@ -414,9 +414,9 @@ async function main() {
   console.log(`Members: ${mCount} | Subscriptions: ${sCount} | Bookings: ${bCount} (${pendCount} pending)`);
   console.log(`Attendance: ${aCount} | Payments: ${pCount} | Classes: ${classes.length} | Plans: ${plans.length} | Trainers: ${trainers.length}`);
   console.log("\nLogins:");
-  console.log("  Admin:      admin@fitpro.in / Admin@1234");
-  console.log("  Reception:  frontdesk@fitpro.in / Front@1234");
-  console.log("  Trainer:    rohan.mehta@fitpro.in / Trainer@1234");
+  console.log("  Admin:      admin@niteshpro.in / Admin@1234");
+  console.log("  Reception:  frontdesk@niteshpro.in / Front@1234");
+  console.log("  Trainer:    rohan.mehta@niteshpro.in / Trainer@1234");
   console.log("  Member:     aarav.sharma@example.com / Member@1234");
   await mongoose.disconnect();
 }

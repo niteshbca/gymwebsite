@@ -145,7 +145,7 @@ export default function AdminMemberDetailPage() {
           </Link>
           <div>
             <h1 className="text-2xl font-bold">{fullName}</h1>
-            <p className="text-sm text-zinc-400 font-mono">{m.memberNumber}</p>
+            <p className="text-sm text-muted-foreground font-mono">{m.memberNumber}</p>
           </div>
           <Badge variant={statusBadgeVariant(m.status)} className="ml-1">{m.status}</Badge>
         </div>
@@ -154,54 +154,54 @@ export default function AdminMemberDetailPage() {
 
       <div className="grid gap-4 lg:grid-cols-3">
         {/* Profile */}
-        <Card className="border-zinc-800 bg-zinc-900">
+        <Card className="border-border bg-card">
           <CardContent className="grid gap-2.5 p-5 text-sm">
-            <div className="flex items-center gap-2 text-zinc-200"><Phone className="h-4 w-4 text-zinc-500" /> {m.phone}</div>
-            {m.email && <div className="flex items-center gap-2 text-zinc-200"><Mail className="h-4 w-4 text-zinc-500" /> {m.email}</div>}
-            {m.address && <div className="flex items-center gap-2 text-zinc-200"><MapPin className="h-4 w-4 text-zinc-500" /> {m.address}</div>}
-            <div className="flex items-center gap-2 text-zinc-400">Joined {fmtDate(m.joinDate)}
+            <div className="flex items-center gap-2 text-foreground"><Phone className="h-4 w-4 text-muted-foreground/75" /> {m.phone}</div>
+            {m.email && <div className="flex items-center gap-2 text-foreground"><Mail className="h-4 w-4 text-muted-foreground/75" /> {m.email}</div>}
+            {m.address && <div className="flex items-center gap-2 text-foreground"><MapPin className="h-4 w-4 text-muted-foreground/75" /> {m.address}</div>}
+            <div className="flex items-center gap-2 text-muted-foreground">Joined {fmtDate(m.joinDate)}
               {m.assignedTrainer && <span> · Trainer: {m.assignedTrainer.name}</span>}
             </div>
-            {m.goals && <p className="rounded-lg bg-zinc-950 p-2.5 text-xs text-zinc-400"><span className="font-semibold text-zinc-300">Goals:</span> {m.goals}</p>}
-            {m.healthInfo && <p className="rounded-lg bg-zinc-950 p-2.5 text-xs text-zinc-400"><span className="font-semibold text-zinc-300">Health:</span> {m.healthInfo}</p>}
+            {m.goals && <p className="rounded-lg bg-background p-2.5 text-xs text-muted-foreground"><span className="font-semibold text-foreground/75">Goals:</span> {m.goals}</p>}
+            {m.healthInfo && <p className="rounded-lg bg-background p-2.5 text-xs text-muted-foreground"><span className="font-semibold text-foreground/75">Health:</span> {m.healthInfo}</p>}
             {m.emergencyContactName && (
-              <p className="text-xs text-zinc-500">Emergency: {m.emergencyContactName} · {m.emergencyContactPhone}</p>
+              <p className="text-xs text-muted-foreground/75">Emergency: {m.emergencyContactName} · {m.emergencyContactPhone}</p>
             )}
           </CardContent>
         </Card>
 
         {/* QR */}
-        <Card className="border-zinc-800 bg-zinc-900">
+        <Card className="border-border bg-card">
           <CardContent className="grid justify-center gap-2 p-5 text-center">
             <p className="flex items-center gap-2 text-sm font-semibold"><QrCode className="h-4 w-4 text-primary" /> Check-in QR</p>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={`https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=${encodeURIComponent(m.qrToken)}`}
               alt="Member QR"
-              className="mx-auto rounded-lg border border-zinc-800 bg-white p-1.5"
+              className="mx-auto rounded-lg border border-border bg-white p-1.5"
               width={160}
               height={160}
             />
-            <p className="text-xs text-zinc-500">Print or scan at the front desk.</p>
+            <p className="text-xs text-muted-foreground/75">Print or scan at the front desk.</p>
           </CardContent>
         </Card>
 
         {/* Stats */}
-        <Card className="border-zinc-800 bg-zinc-900">
+        <Card className="border-border bg-card">
           <CardContent className="grid gap-3 p-5">
             <div className="flex items-center justify-between text-sm">
-              <span className="flex items-center gap-2 text-zinc-400"><Footprints className="h-4 w-4" /> Total check-ins</span>
+              <span className="flex items-center gap-2 text-muted-foreground"><Footprints className="h-4 w-4" /> Total check-ins</span>
               <span className="font-bold">{m.attendance.length}</span>
             </div>
             <div className="flex items-center justify-between text-sm">
-              <span className="flex items-center gap-2 text-zinc-400"><CreditCard className="h-4 w-4" /> Invoices</span>
+              <span className="flex items-center gap-2 text-muted-foreground"><CreditCard className="h-4 w-4" /> Invoices</span>
               <span className="font-bold">{m.invoices.length}</span>
             </div>
             <div className="flex items-center justify-between text-sm">
-              <span className="flex items-center gap-2 text-zinc-400"><CalendarPlus className="h-4 w-4" /> Memberships</span>
+              <span className="flex items-center gap-2 text-muted-foreground"><CalendarPlus className="h-4 w-4" /> Memberships</span>
               <span className="font-bold">{m.subscriptions.length}</span>
             </div>
-            <div className="mt-1 border-t border-zinc-800 pt-3 text-xs text-zinc-500">
+            <div className="mt-1 border-t border-border pt-3 text-xs text-muted-foreground/75">
               Last visit: {m.attendance[0] ? fmtDateTime(m.attendance[0].checkInAt) : "never"}
             </div>
           </CardContent>
@@ -209,7 +209,7 @@ export default function AdminMemberDetailPage() {
       </div>
 
       {/* Memberships */}
-      <Card className="border-zinc-800 bg-zinc-900">
+      <Card className="border-border bg-card">
         <CardHeader className="pb-3">
           <CardTitle className="text-base">Memberships</CardTitle>
           <CardDescription>Subscriptions, expiry and balances</CardDescription>
@@ -224,23 +224,23 @@ export default function AdminMemberDetailPage() {
           ) : (
             <div className="grid gap-2">
               {m.subscriptions.map((s) => (
-                <div key={s.id} className="flex flex-wrap items-center justify-between gap-3 rounded-lg border border-zinc-800 bg-zinc-950 px-4 py-3">
+                <div key={s.id} className="flex flex-wrap items-center justify-between gap-3 rounded-lg border border-border bg-background px-4 py-3">
                   <div>
                     <p className="text-sm font-medium">
                       {s.planSnapshot.name}
-                      <span className="ml-2 font-mono text-xs text-zinc-500">{s.subscriptionNumber}</span>
+                      <span className="ml-2 font-mono text-xs text-muted-foreground/75">{s.subscriptionNumber}</span>
                     </p>
-                    <p className="text-xs text-zinc-400">
+                    <p className="text-xs text-muted-foreground">
                       {fmtDate(s.startDate)} → {fmtDate(s.endDate)} · {s.planSnapshot.durationValue} {s.planSnapshot.durationUnit}
                       {s.freezeCount > 0 ? ` · ${s.freezeCount} freeze(s)` : ""}
                     </p>
                   </div>
                   <div className="flex items-center gap-2">
-                    <span className="text-xs text-zinc-400">{money(s.totalMinor)}</span>
+                    <span className="text-xs text-muted-foreground">{money(s.totalMinor)}</span>
                     <Badge variant={statusBadgeVariant(s.effectiveStatus)}>{s.effectiveStatus.replace("_", " ")}</Badge>
                     <Badge variant={statusBadgeVariant(s.paymentStatus)}>{s.paymentStatus}</Badge>
                     {Number(s.balanceMinor) > 0 && (
-                      <span className="text-xs font-semibold text-amber-400">due {money(s.balanceMinor)}</span>
+                      <span className="text-xs font-semibold text-amber-600">due {money(s.balanceMinor)}</span>
                     )}
                   </div>
                 </div>
@@ -252,7 +252,7 @@ export default function AdminMemberDetailPage() {
 
       {/* Invoices & attendance */}
       <div className="grid gap-4 lg:grid-cols-2">
-        <Card className="border-zinc-800 bg-zinc-900">
+        <Card className="border-border bg-card">
           <CardHeader className="pb-3">
             <CardTitle className="text-base">Invoices & payments</CardTitle>
             <CardDescription>Record cash / UPI / card collections</CardDescription>
@@ -265,10 +265,10 @@ export default function AdminMemberDetailPage() {
                 {m.invoices.map((inv) => {
                   const balance = inv.totalMinor - inv.paidMinor;
                   return (
-                    <div key={inv.id} className="flex flex-wrap items-center justify-between gap-2 rounded-lg border border-zinc-800 bg-zinc-950 px-4 py-3">
+                    <div key={inv.id} className="flex flex-wrap items-center justify-between gap-2 rounded-lg border border-border bg-background px-4 py-3">
                       <div>
                         <p className="text-sm font-medium font-mono">{inv.invoiceNumber}</p>
-                        <p className="text-xs text-zinc-400">
+                        <p className="text-xs text-muted-foreground">
                           {fmtDate(inv.issuedAt)} · {money(inv.paidMinor)} of {money(inv.totalMinor)} paid
                         </p>
                       </div>
@@ -278,7 +278,7 @@ export default function AdminMemberDetailPage() {
                           <Button
                             size="sm"
                             variant="outline"
-                            className="border-amber-700 bg-transparent text-amber-400 hover:bg-amber-950"
+                            className="border-amber-300 bg-transparent text-amber-600 hover:bg-amber-50"
                             onClick={() => { setPayTarget(inv); setPay({ amount: (balance / 100).toFixed(2), method: "cash", notes: "" }); }}
                           >
                             Record payment
@@ -293,7 +293,7 @@ export default function AdminMemberDetailPage() {
           </CardContent>
         </Card>
 
-        <Card className="border-zinc-800 bg-zinc-900">
+        <Card className="border-border bg-card">
           <CardHeader className="pb-3">
             <CardTitle className="text-base">Recent visits</CardTitle>
             <CardDescription>Last {Math.min(m.attendance.length, 10)} check-ins</CardDescription>
@@ -304,8 +304,8 @@ export default function AdminMemberDetailPage() {
             ) : (
               <div className="grid gap-1.5">
                 {m.attendance.slice(0, 10).map((a) => (
-                  <div key={a.id} className="flex items-center justify-between rounded-md border border-zinc-800 px-3 py-2 text-sm">
-                    <span className="text-zinc-300">{fmtDateTime(a.checkInAt)}</span>
+                  <div key={a.id} className="flex items-center justify-between rounded-md border border-border px-3 py-2 text-sm">
+                    <span className="text-foreground/75">{fmtDateTime(a.checkInAt)}</span>
                     <Badge variant="secondary" className="capitalize">{a.method.replace("_", " ")}</Badge>
                   </div>
                 ))}
@@ -324,8 +324,8 @@ export default function AdminMemberDetailPage() {
           </DialogHeader>
           <div className="grid gap-4">
             <div className="grid gap-1.5">
-              <Label htmlFor="plan" className="text-xs text-zinc-400">Plan <span className="text-red-400">*</span></Label>
-              <Select id="plan" value={sell.plan} onChange={(e) => setSell((s) => ({ ...s, plan: e.target.value }))} className="border-zinc-700 bg-zinc-950 text-zinc-100">
+              <Label htmlFor="plan" className="text-xs text-muted-foreground">Plan <span className="text-red-600">*</span></Label>
+              <Select id="plan" value={sell.plan} onChange={(e) => setSell((s) => ({ ...s, plan: e.target.value }))} className="border-input bg-background text-foreground">
                 <option value="">Select plan...</option>
                 {(plans ?? []).filter((p) => p.active).map((p) => (
                   <option key={p.id} value={p.id}>
@@ -336,27 +336,27 @@ export default function AdminMemberDetailPage() {
             </div>
             <div className="grid gap-4 sm:grid-cols-2">
               <div className="grid gap-1.5">
-                <Label htmlFor="startDate" className="text-xs text-zinc-400">Start date</Label>
-                <Input id="startDate" type="date" value={sell.startDate} onChange={(e) => setSell((s) => ({ ...s, startDate: e.target.value }))} className="border-zinc-700 bg-zinc-950 text-zinc-100" />
+                <Label htmlFor="startDate" className="text-xs text-muted-foreground">Start date</Label>
+                <Input id="startDate" type="date" value={sell.startDate} onChange={(e) => setSell((s) => ({ ...s, startDate: e.target.value }))} className="border-input bg-background text-foreground" />
               </div>
               <div className="grid gap-1.5">
-                <Label htmlFor="discount" className="text-xs text-zinc-400">Discount %</Label>
-                <Input id="discount" type="number" min={0} max={100} value={sell.discountPercent} onChange={(e) => setSell((s) => ({ ...s, discountPercent: Number(e.target.value) }))} className="border-zinc-700 bg-zinc-950 text-zinc-100" />
+                <Label htmlFor="discount" className="text-xs text-muted-foreground">Discount %</Label>
+                <Input id="discount" type="number" min={0} max={100} value={sell.discountPercent} onChange={(e) => setSell((s) => ({ ...s, discountPercent: Number(e.target.value) }))} className="border-input bg-background text-foreground" />
               </div>
             </div>
             <div className="flex flex-wrap gap-5">
-              <label className="flex cursor-pointer items-center gap-2 text-sm text-zinc-300">
+              <label className="flex cursor-pointer items-center gap-2 text-sm text-foreground/75">
                 <input type="checkbox" className="accent-primary" checked={sell.activate} onChange={(e) => setSell((s) => ({ ...s, activate: e.target.checked }))} />
                 Activate immediately
               </label>
-              <label className="flex cursor-pointer items-center gap-2 text-sm text-zinc-300">
+              <label className="flex cursor-pointer items-center gap-2 text-sm text-foreground/75">
                 <input type="checkbox" className="accent-primary" checked={sell.createInvoice} onChange={(e) => setSell((s) => ({ ...s, createInvoice: e.target.checked }))} />
                 Create invoice
               </label>
             </div>
           </div>
           <DialogFooter>
-            <Button variant="outline" className="border-zinc-700 bg-transparent" onClick={() => setSellOpen(false)}>Cancel</Button>
+            <Button variant="outline" className="border-input bg-transparent" onClick={() => setSellOpen(false)}>Cancel</Button>
             <Button onClick={sellMembership} disabled={busy}>{busy ? "Creating..." : "Create membership"}</Button>
           </DialogFooter>
         </DialogContent>
@@ -371,22 +371,22 @@ export default function AdminMemberDetailPage() {
           </DialogHeader>
           <div className="grid gap-4">
             <div className="grid gap-1.5">
-              <Label htmlFor="amt" className="text-xs text-zinc-400">Amount (₹)</Label>
-              <Input id="amt" type="number" min="1" step="0.01" value={pay.amount} onChange={(e) => setPay((p) => ({ ...p, amount: e.target.value }))} className="border-zinc-700 bg-zinc-950 text-zinc-100" />
+              <Label htmlFor="amt" className="text-xs text-muted-foreground">Amount (₹)</Label>
+              <Input id="amt" type="number" min="1" step="0.01" value={pay.amount} onChange={(e) => setPay((p) => ({ ...p, amount: e.target.value }))} className="border-input bg-background text-foreground" />
             </div>
             <div className="grid gap-1.5">
-              <Label htmlFor="method" className="text-xs text-zinc-400">Method</Label>
-              <Select id="method" value={pay.method} onChange={(e) => setPay((p) => ({ ...p, method: e.target.value }))} className="border-zinc-700 bg-zinc-950 text-zinc-100">
+              <Label htmlFor="method" className="text-xs text-muted-foreground">Method</Label>
+              <Select id="method" value={pay.method} onChange={(e) => setPay((p) => ({ ...p, method: e.target.value }))} className="border-input bg-background text-foreground">
                 {Object.entries(METHOD_LABELS).filter(([k]) => k !== "online").map(([k, v]) => <option key={k} value={k}>{v}</option>)}
               </Select>
             </div>
             <div className="grid gap-1.5">
-              <Label htmlFor="pnotes" className="text-xs text-zinc-400">Notes</Label>
-              <Input id="pnotes" value={pay.notes} onChange={(e) => setPay((p) => ({ ...p, notes: e.target.value }))} placeholder="Optional" className="border-zinc-700 bg-zinc-950 text-zinc-100" />
+              <Label htmlFor="pnotes" className="text-xs text-muted-foreground">Notes</Label>
+              <Input id="pnotes" value={pay.notes} onChange={(e) => setPay((p) => ({ ...p, notes: e.target.value }))} placeholder="Optional" className="border-input bg-background text-foreground" />
             </div>
           </div>
           <DialogFooter>
-            <Button variant="outline" className="border-zinc-700 bg-transparent" onClick={() => setPayTarget(null)}>Cancel</Button>
+            <Button variant="outline" className="border-input bg-transparent" onClick={() => setPayTarget(null)}>Cancel</Button>
             <Button onClick={recordPayment} disabled={busy}>{busy ? "Saving..." : "Record payment"}</Button>
           </DialogFooter>
         </DialogContent>

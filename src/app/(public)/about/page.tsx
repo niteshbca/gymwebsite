@@ -7,7 +7,7 @@ export default function AboutPage() {
   const s = data?.settings;
   return (
     <div className="mx-auto max-w-4xl px-4 py-16">
-      <h1 className="text-4xl font-extrabold tracking-tight">About {s?.gymName ?? "FitPro"}</h1>
+      <h1 className="text-4xl font-semibold tracking-tight">About {s?.gymName ?? "NiteshPro"}</h1>
       <p className="mt-6 text-lg leading-relaxed text-muted-foreground">{s?.tagline}</p>
       <p className="mt-4 leading-relaxed text-muted-foreground">
         We are a community-first fitness facility with certified coaches, modern equipment and programs for every level —

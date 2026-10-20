@@ -46,7 +46,7 @@ const NAV = [
 
 export function SiteHeader({ site }: { site?: PublicSite }) {
   const [open, setOpen] = useState(false);
-  const name = site?.settings.gymName ?? "FitPro";
+  const name = site?.settings.gymName ?? "NiteshPro";
   return (
     <header className="sticky top-0 z-40 border-b bg-background/90 backdrop-blur">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4">
@@ -94,7 +94,7 @@ export function SiteFooter({ site }: { site?: PublicSite }) {
     <footer className="border-t bg-muted/40">
       <div className="mx-auto grid max-w-7xl gap-10 px-4 py-14 sm:grid-cols-2 lg:grid-cols-4">
         <div>
-          <p className="font-bold">{s?.gymName ?? "FitPro"}</p>
+          <p className="font-bold">{s?.gymName ?? "NiteshPro"}</p>
           <p className="mt-2 text-sm text-muted-foreground">{s?.tagline}</p>
           <div className="mt-4 space-y-1 text-sm text-muted-foreground">
             <p className="flex items-center gap-2"><MapPin className="h-4 w-4" />{s?.address}, {s?.city}</p>
@@ -136,7 +136,7 @@ export function SiteFooter({ site }: { site?: PublicSite }) {
         </div>
       </div>
       <div className="border-t py-4 text-center text-xs text-muted-foreground">
-        © {new Date().getFullYear()} {s?.gymName ?? "FitPro"}. All rights reserved.
+        © {new Date().getFullYear()} {s?.gymName ?? "NiteshPro"}. All rights reserved.
       </div>
     </footer>
   );
