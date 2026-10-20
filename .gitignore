@@ -10,3 +10,4 @@ coverage/
 .DS_Store
 dist/
 uploads/
+server-log.txt
